@@ -1,88 +1,74 @@
-import { defineComponent, ref, onMounted, reactive } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 import G6 from '@antv/g6';
+import { IShape } from '@antv/g-base/lib/interfaces'
+import { ModelConfig } from '@antv/g6/lib/types';
+import Group from '@antv/g-canvas/lib/group'
 
 export default defineComponent ({
   name: 'Test',
+
+  
+
   setup() {
-    const count = ref(0);
 
-    let initData = reactive({
-      // 点集
-      nodes: [
-        {
-          id: 'node1',
-          x: 100,
-          y: 200,
-          label: '起始点'
+    const init = () => {
+      G6.registerNode('customNode', {
+        draw(cfg: ModelConfig, group: Group): IShape{
+          const keyShape = group.addShape('dom', {
+            attrs: {
+              width: cfg.width,
+              height: cfg.height,
+              html:
+              <div style="background-color: #fff; border:2px solid #5B8FF9"></div>
+            }
+          })
+
+          return keyShape;
         },
-        {
-          id: 'node2',
-          x: 300,
-          y: 200,
-          label: '目标点',
-        }
-      ],
-      // 边集
-      edges: [
-        {
-          source: 'node1',
-          target: 'node2',
-          label: '连线'
-        }
-      ]
-    });
-
-    const getData = async () => {
-      const response = await fetch('https://gw.alipayobjects.com/os/basement_prod/6cae02ab-4c29-44b2-b1fd-4005688febcb.json');
-      initData = await response.json();
-      console.log(initData);
+        // 返回菱形的路径
+        getPath(cfg: any) {
+          const size = cfg.size || [40, 40]; // 如果没有 size 时的默认大小
+          const width = size[0];
+          const height = size[1];
+          //  / 1 \
+          // 4     2
+          //  \ 3 /
+          const path = [
+            ['M', 0, 0 - height / 2], // 上部顶点
+            ['L', width / 2, 0], // 右侧顶点
+            ['L', 0, height / 2], // 下部顶点
+            ['L', -width / 2, 0], // 左侧顶点
+            ['Z'], // 封闭
+          ];
+          return path;
+        },
+      });
+  
+      const data = {
+        nodes: [
+          { id: 'node1', x: 50, y: 100, type: 'customNode' }, // 最简单的
+          { id: 'node2', x: 150, y: 100, type: 'customNode', size: [50, 100] }, // 添加宽高
+          { id: 'node3', x: 250, y: 100, color: 'red', type: 'customNode' }, // 添加颜色
+          { id: 'node4', x: 350, y: 100, text: '菱形', type: 'customNode' }, // 附加文本
+        ]
+      };
+  
+      const graph = new G6.Graph({
+        container: 'mountNode',
+        width: 500,
+        height: 500,
+      });
+  
+      graph.data(data);
+      graph.render();
     }
 
-    onMounted(async () => {
-      await getData();
-      const graph = new G6.Graph({
-        container: 'mountNode',//.value, // String | HTMLElement，必须，在 Step 1 中创建的容器 id 或容器本身
-        width: 800, // Number，必须，图的宽度
-        height: 500, // Number，必须，图的高度
-        fitView: true,
-        fitViewPadding: [20, 40, 50, 20],
-        modes: {
-          // 支持的 behavior
-          default: ['drag-canvas', 'zoom-canvas', 'drag-node'],
-          edit: ['click-select'],
-        },
-        layout: {
-          type: 'dagre',
-          rankdir: 'LR', // 可选，默认为图的中心
-          align: 'DL', // 可选
-          nodesep: 20, // 可选
-          ranksep: 50, // 可选
-          controlPoints: true, // 可选
-        },
-      });
-      graph.data(initData); // 读取 Step 2 中的数据源到图上
-      graph.render(); // 渲染图
-
-      // 点击节点
-      graph.on('node:click', (e: any) => {
-        console.log(e.item);
-        // 先将所有当前是 click 状态的节点置为非 click 状态
-        const clickNodes = graph.findAllByState('node', 'click');
-        clickNodes.forEach((cn) => {
-          graph.setItemState(cn, 'click', false);
-        });
-        const nodeItem = e.item; // 获取被点击的节点元素对象
-        graph.setItemState(nodeItem, 'click', true); // 设置当前节点的 click 状态为 true
-      });
+    onMounted(() => {
+      init();
     })
 
-    const add = () => {
-      count.value++;
-    };
-
     return () => (
-      <div style="color: red;">{ count.value }
-        <a-button type="primary" onClick={getData}>+1</a-button>
+      <div style="color: red;">
         <div id='mountNode' />
       </div>
     )
