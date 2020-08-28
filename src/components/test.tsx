@@ -8,7 +8,6 @@ export default defineComponent ({
   
 
   setup() {
-
     onMounted(() => {
       gd.init();
     })

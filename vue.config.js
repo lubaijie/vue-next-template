@@ -1,3 +1,7 @@
+
+
+const name = 'YunFly' // 网址标题
+
 module.exports = {
   css: {
     loaderOptions: {
@@ -5,5 +9,8 @@ module.exports = {
         javascriptEnabled: true
       }
     }
+  },
+  configureWebpack: {
+    name: name
   }
 }
