@@ -4,6 +4,9 @@
     <img class="logo" src="@/assets/logo.svg" />
     <div class="title">{{ title }}</div>
   </div>
+  <div class="panel-container">
+    <login-panel />
+  </div>
 </div>
 </template>
 
@@ -11,17 +14,20 @@
 import {
   defineComponent
 } from 'vue';
+import setting from '@/config/setting'
 
-// class Login {
-
-// }
+import LoginPanel from './components/LoginPanel.vue';
 
 export default defineComponent({
   name: 'Login',
 
+  components: {
+    LoginPanel
+  },
+
   setup() {
 
-    const title = 'Ant Design';
+    const title = setting.title;
 
     return {
       title
@@ -48,6 +54,10 @@ export default defineComponent({
       vertical-align: middle;
       margin-left: 15px;
     }
+  }
+
+  .panel-container {
+    margin-top: 50px;
   }
 }
 </style>

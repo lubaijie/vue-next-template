@@ -54,7 +54,8 @@
     },
     "rules": {
       "vue/no-useless-v-bind": "warn",
-      "@typescript-eslint/no-explicit-any": "off"
+      "@typescript-eslint/no-explicit-any": "off",
+      "vue/no-v-model-argument": "off"
     }
   },
   "browserslist": [
