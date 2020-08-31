@@ -6,10 +6,8 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  computed
-} from 'vue';
+import { defineComponent, computed } from 'vue';
+import { isExternal } from '@/utils/validate'
 
 export default defineComponent({
   name: 'SvgIcon',
@@ -25,7 +23,7 @@ export default defineComponent({
   setup(props) {
 
     const external = computed(() => {
-      return /^(https?:|mailto:|tel:)/.test(props.iconClass);
+      return isExternal(props.iconClass);
     });
     const iconName = computed(() => {
       console.log(props.iconClass);

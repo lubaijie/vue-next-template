@@ -19,7 +19,7 @@
     </a-tabs>
 
   </a-form>
-  <svg-icon iconClass="../../../assets/icons/app.svg" />
+  <svg-icon iconClass="app" />
 </div>
 </template>
 
