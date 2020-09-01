@@ -1,5 +1,9 @@
-import Vue from 'vue';
+import { createApp } from 'vue';
 import SvgIcon from '@/components/SvgIcon/index.vue';
+
+const app = createApp({});
+
+app.component('svg-icon', SvgIcon);
 
 const req = require.context('./svg', false, /\.svg$/);
 const requireAll = requireContext => requireContext.keys().map(requireContext);

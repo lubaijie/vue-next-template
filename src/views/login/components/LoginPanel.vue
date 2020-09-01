@@ -29,14 +29,14 @@ import {
   reactive,
   ref
 } from 'vue'
-import SvgIcon from '@/components/SvgIcon/index.vue'
+// import SvgIcon from '@/components/SvgIcon/index.vue'
 
 export default defineComponent({
   name: 'LoginPanel',
 
-  components: {
-    SvgIcon
-  },
+  // components: {
+  //   SvgIcon
+  // },
 
   setup() {
     const form = reactive({
