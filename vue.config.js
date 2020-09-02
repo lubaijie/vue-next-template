@@ -41,7 +41,7 @@ module.exports = {
       })
       .end()
 
-      // // set preserveWhitespace
+      // set preserveWhitespace
       // config.module
       //   .rule('vue')
       //   .use('vue-loader')

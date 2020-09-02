@@ -4,9 +4,9 @@
     <a-tabs :activeKey="customActiveKey" @change="handleTabClick" :tabBarStyle="{ textAlign: 'center', borderBottom: 'unset' }">
       <a-tab-pane :key="1" tab="账号密码登录">
         <a-form-item>
-          <a-input v-model:value="form.user" placeholder="用户名">
+          <a-input v-model:value="form.user" placeholder="用户名" size="large" style="background-color: #fff">
             <template v-slot:prefix>
-              123
+              <user-outlined style="color: #ccc;font-size: 16px;" />
             </template>
           </a-input>
         </a-form-item>
@@ -29,14 +29,14 @@ import {
   reactive,
   ref
 } from 'vue'
-// import SvgIcon from '@/components/SvgIcon/index.vue'
+import { UserOutlined } from '@ant-design/icons-vue'
 
 export default defineComponent({
   name: 'LoginPanel',
 
-  // components: {
-  //   SvgIcon
-  // },
+  components: {
+    UserOutlined
+  },
 
   setup() {
     const form = reactive({

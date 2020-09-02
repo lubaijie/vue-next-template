@@ -39,6 +39,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .login-container {
   height: 100%;
+  background-color: #f0f2f5;
   background-image: url('../../assets/background.svg');
   padding-top: 10%;
 
