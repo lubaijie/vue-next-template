@@ -1,4 +1,4 @@
-import { defineComponent, onMounted } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 
 import gd from './gd'
 
@@ -22,12 +22,14 @@ export default defineComponent ({
       gd.init();
     })
 
+    const value = ref('');
+
     
     
     return () => (
       <div style="color: red;">
         <div id='mountNode' />
-        {/* <div>{content}</div> */}
+        <a-input v-model={value} />
       </div>
     )
   }

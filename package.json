@@ -11,6 +11,7 @@
     "@ant-design/icons-vue": "^5.1.5",
     "@antv/g6": "^3.7.1",
     "ant-design-vue": "^2.0.0-beta.6",
+    "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "node-sass": "^4.14.1",
     "paths-js": "^0.4.11",
