@@ -7,7 +7,7 @@ function resolve(dir) {
 }
 
 
-const name = 'YunFly' // 网址标题
+const name = 'Yun Fly' // 网址标题
 
 module.exports = {
   css: {

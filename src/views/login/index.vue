@@ -14,7 +14,7 @@
 import {
   defineComponent
 } from 'vue';
-import setting from '@/config/setting'
+import config from '@/config/index'
 
 import LoginPanel from './components/LoginPanel.vue';
 
@@ -27,7 +27,7 @@ export default defineComponent({
 
   setup() {
 
-    const title = setting.title;
+    const title = config.title;
 
     return {
       title
