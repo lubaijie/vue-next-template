@@ -34,8 +34,8 @@ export default defineComponent({
     // const store = useStore();
 
     onMounted(() => {
-      const div = document.createElement('div');
-      console.log(typeof(div));
+      // const div = document.createElement('div');
+      // console.log(typeof(div));
       // Loading.service({ background: 'rgba(0, 0, 0, 0.4)', spinner: 'el-icon-loading', text: '拼命加载中...' });
       // console.log(store.state.system.isLoading);
       // store.dispatch('system/IsLoading', false);
@@ -49,7 +49,7 @@ export default defineComponent({
     }
 
     const ceshi = () => {
-      console.log(open());
+      open({text: '加载中...'});
     }
 
     return {

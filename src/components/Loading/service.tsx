@@ -1,4 +1,4 @@
-import { createApp, defineComponent, reactive } from 'vue';
+import { createApp, defineComponent } from 'vue';
 import './index.scss';
 
 import { RotateSquare, RotateSquare2, RotateSquare3, RotateSquare4, RotateSquare5, 
@@ -17,13 +17,7 @@ interface OptionProps {
   el: Element | string | undefined;
 }
 
-const option = reactive({
-  text: '加载中...',
-  type: 'Stretch',
-  el: null
-})
-
-const setTypeCom = () => {
+const setTypeCom = (option: OptionProps) => {
   let typeCom: any = null;
   switch (option.type) {
     case 'RotateSquare':
@@ -156,55 +150,48 @@ const setTypeCom = () => {
   return typeCom;
 }
 
-const app = createApp(defineComponent({
-  setup(){
-    return () => (
-      <div>
-        <div class="loading-mask">
-          <div>
-            { setTypeCom() }
-            <div style="margin-top: 5px">{ option.text }</div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-}));
-
-const element = () => {
-
-}
-
-const loading = {
-  open() {
-
-  }
-}
-
+const loadingId = 'yf-loading-container'
 const domId = 'yf-loading-service'
 
 export function open(option: OptionProps) {
-  if (option.type === null) {
-    option.type = 'Stretch';
+  if (option.text === undefined || option.text === null) {
+    option.text = '加载中...';
   }
 
+  if (option.type === null || option.type === undefined) {
+    option.type = 'Circle8';
+  }
+
+  const app = createApp(defineComponent({
+    setup(){
+      return () => (
+        <div id={loadingId}>
+          <div class="loading-mask">
+            <div>
+              { setTypeCom(option) }
+              <div style="margin-top: 5px">{ option.text }</div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+  }));
   if (option.el === undefined || option.el === null) {
     const div = document.createElement('div');
     div.setAttribute('id', domId);
+    document.body.appendChild(div);
     app.mount(div);
   } else {
     if (typeof(option.el) === 'string') {
       const dom = document.getElementById(option.el);
-      if (dom === undefined) {
+      if (dom === null) {
         const div = document.createElement('div');
         div.setAttribute('id', domId);
         app.mount(div);
       } else {
-        dom.setAttribute('id', domId);
         app.mount(dom);
       }
     } else {
-      option.el.setAttribute('id', domId);
       app.mount(option.el)
     }
   }
