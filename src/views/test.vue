@@ -1,7 +1,6 @@
 <template>
 <div ref="root">
-  <a-button @click="ceshi">测试</a-button>
-  <RotateSquare2 />
+  <a-button @click="t">测试</a-button>
 </div>
 </template>
 
@@ -18,16 +17,9 @@ import {
   test
 } from '@/api/test'
 // import { notification } from 'ant-design-vue'
-import {
-  open
-} from '@/components/Loading/service.tsx'
-
-import { RotateSquare2 } from 'vue-loading-spinner'
+import loading from '@/components/Loading/service.tsx'
 
 export default defineComponent({
-  components: {
-    RotateSquare2
-  },
   setup() {
     const root = ref(null);
 
@@ -49,7 +41,7 @@ export default defineComponent({
     }
 
     const ceshi = () => {
-      open({text: '加载中...'});
+      loading.open({text: '加载中...', time: 4000});
     }
 
     return {

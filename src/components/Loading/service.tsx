@@ -1,4 +1,4 @@
-import { createApp, defineComponent } from 'vue';
+import { createApp, defineComponent, ref } from 'vue';
 import './index.scss';
 
 import { RotateSquare, RotateSquare2, RotateSquare3, RotateSquare4, RotateSquare5, 
@@ -8,13 +8,12 @@ import { RotateSquare, RotateSquare2, RotateSquare3, RotateSquare4, RotateSquare
   Pencil, Jawn, LetterCube, PingPong, Diamond, SpinLine, Plane, Mikepad, Texture 
 } from 'vue-loading-spinner'
 
-// const text = '加载中...';
-// const type = 'RotateSquare2';
 
 interface OptionProps {
   text: string;
   type: string;
-  el: Element | string | undefined;
+  el: Element | string;
+  time: number;
 }
 
 const setTypeCom = (option: OptionProps) => {
@@ -150,23 +149,55 @@ const setTypeCom = (option: OptionProps) => {
   return typeCom;
 }
 
-const loadingId = 'yf-loading-container'
+const isClose = ref(false);
+
+let currentOption: OptionProps;
+
 const domId = 'yf-loading-service'
 
-export function open(option: OptionProps) {
+const close = () => {
+  const loadingDom = document.getElementById(domId);
+  if (loadingDom !== null) {
+    isClose.value = true;
+    setTimeout(() => {
+      if (currentOption.el === undefined) {
+        document.body.removeChild(loadingDom);
+      } else {
+        if (typeof(currentOption.el) === 'string') {
+          const dom = document.getElementById(currentOption.el);
+          if (dom === null) {
+            document.body.removeChild(loadingDom);
+          } else {
+            dom.removeChild(loadingDom);
+          }
+        } else {
+          currentOption.el.removeChild(loadingDom);
+        }
+      }
+      isClose.value = false;
+    }, 200);
+  }
+}
+
+const open = (option: OptionProps | any) => {
+  if (document.getElementById(domId) !== null) {
+    return;
+  }
+  currentOption = option;
+
   if (option.text === undefined || option.text === null) {
     option.text = '加载中...';
   }
 
   if (option.type === null || option.type === undefined) {
-    option.type = 'Circle8';
+    option.type = 'ThreeDots';
   }
 
   const app = createApp(defineComponent({
     setup(){
       return () => (
-        <div id={loadingId}>
-          <div class="loading-mask">
+        <div>
+          <div class="loading-mask" style={isClose.value ? { backgroundColor: '#fff0' } : {}}>
             <div>
               { setTypeCom(option) }
               <div style="margin-top: 5px">{ option.text }</div>
@@ -194,5 +225,18 @@ export function open(option: OptionProps) {
     }
   }
   app.mount(div);
+
+  if (option.time !== undefined && option.time > 0) {
+    setTimeout(() => {
+      close();
+    }, option.time);
+  }
 }
 
+
+const loading = {
+  close: close,
+  open: open
+}
+
+export default loading;
