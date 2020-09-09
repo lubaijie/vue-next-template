@@ -176,24 +176,23 @@ export function open(option: OptionProps) {
       )
     }
   }));
-  if (option.el === undefined || option.el === null) {
-    const div = document.createElement('div');
-    div.setAttribute('id', domId);
+  const div = document.createElement('div');
+  div.setAttribute('id', domId);
+
+  if (option.el === undefined || option.el === null) {   
     document.body.appendChild(div);
-    app.mount(div);
   } else {
     if (typeof(option.el) === 'string') {
       const dom = document.getElementById(option.el);
       if (dom === null) {
-        const div = document.createElement('div');
-        div.setAttribute('id', domId);
-        app.mount(div);
+        document.body.appendChild(div);
       } else {
-        app.mount(dom);
+        dom.appendChild(div);
       }
     } else {
-      app.mount(option.el)
+      option.el.appendChild(div)
     }
   }
+  app.mount(div);
 }
 
