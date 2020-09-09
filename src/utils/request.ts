@@ -8,7 +8,8 @@ import notification  from 'ant-design-vue'
 
 // 创建axios实例
 const service = axios.create({
-  baseURL: process.env.NODE_ENV === 'development' ? process.env.VUE_APP_BASE_API : '/',
+  // baseURL: process.env.NODE_ENV === 'development' ? process.env.VUE_APP_BASE_API : '/',
+  baseURL: process.env.VUE_APP_BASE_API,
   timeout: config.timeOut // 请求超时时间
 })
 
