@@ -2,7 +2,7 @@ import axios from 'axios';
 // import router from '@/router';
 import config from '@/config';
 import { getToken } from './auth';
-// import notification  from 'ant-design-vue'
+import { notification }  from 'ant-design-vue'
 import loading from '@/components/Loading/service';
 import store from '@/store'
 
@@ -64,10 +64,10 @@ service.interceptors.response.use(
     
     const code = response.status;
     if (code < 200 || code > 300) {
-      // notification.error({
-      //   message: response.data,
-      //   description: response.status
-      // })
+      notification.error({
+        message: response.data,
+        description: response.status
+      })
       return Promise.reject('error');
     } else {
       return response.data
@@ -82,10 +82,10 @@ service.interceptors.response.use(
       code = error.response.data.status;
     } catch (e) {
       if (error.toString().indexOf('Error: timeout') !== -1) {
-        // notification.error({
-        //   message: '请求超时',
-        //   description: 500
-        // })
+        notification.error({
+          message: '请求超时',
+          description: 500
+        })
         return Promise.reject(error);
       }
     }
@@ -95,16 +95,16 @@ service.interceptors.response.use(
       } else if (code === 403) {
         // 401
       } else {
-        // notification.error({
-        //   message: '系统错误',
-        //   description: code
-        // })
+        notification.error({
+          message: '系统错误',
+          description: code
+        })
       }
     }else {
-      // notification.error({
-      //   message: '接口请求失败',
-      //   description: 500
-      // })
+      notification.error({
+        message: '接口请求失败',
+        description: 500
+      })
     }
     return Promise.reject(error);
   }
