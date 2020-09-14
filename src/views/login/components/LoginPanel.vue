@@ -3,8 +3,8 @@
   <a-form ref="loginForm" :model="form" :rules="rules">
     <a-tabs :activeKey="customActiveKey.value" @change="handleTabClick" :tabBarStyle="{ textAlign: 'center', borderBottom: 'unset' }">
       <a-tab-pane key="1" tab="账号密码登录">
-        <a-form-item name="user">
-          <a-input v-model:value="form.user" placeholder="用户名" size="large">
+        <a-form-item name="username">
+          <a-input v-model:value="form.username" placeholder="用户名" size="large">
             <template v-slot:prefix>
               <user-outlined style="color: #ccc;font-size: 16px;" />
             </template>
@@ -59,7 +59,10 @@ import {
   reactive,
   ref
 } from 'vue'
-import { UserOutlined, LockOutlined, MobileOutlined, MailOutlined } from '@ant-design/icons-vue'
+import { UserOutlined, LockOutlined, MobileOutlined, MailOutlined } from '@ant-design/icons-vue';
+
+import { encrypt } from '@/utils/rsaEncrypt';
+import { login } from '@/api/user'
 
 export default defineComponent({
   name: 'LoginPanel',
@@ -73,8 +76,8 @@ export default defineComponent({
 
   setup() {
     const form = reactive({
-      user: '',
-      password: '',
+      username: 'admin',
+      password: '123456',
       phone: '',
       code: ''
     });
@@ -83,7 +86,7 @@ export default defineComponent({
 
     // 表单验证
     const rules = reactive({
-      user: [{ required: true, message: '用户名不可为空', trigger: 'blur', whitespace: true }],
+      username: [{ required: true, message: '用户名不可为空', trigger: 'blur', whitespace: true }],
       password: [
         { required: true, message: '密码不可为空', trigger: 'blur', whitespace: true },
         { min: 6, message: '密码不能少于6个字符', trigger: 'blur' },
@@ -102,7 +105,7 @@ export default defineComponent({
     const isAutoLogin = ref(false);
 
     const test = () => {
-      console.log(form.user);
+      console.log(form.username);
     }
 
     /**tabs标签页 */
@@ -134,9 +137,12 @@ export default defineComponent({
     // 提交
     const submit = () => {
       const { validateFields }: any = loginForm.value;
-      const filedNames = customActiveKey.value === '1' ? ['user', 'password'] : ['phone','code'];
+      const filedNames = customActiveKey.value === '1' ? ['username', 'password'] : ['phone','code'];
       validateFields(filedNames).then(value => {
-        console.log(value);
+        value.password = encrypt(value.password);
+        login(value).then(res => {
+          console.log(res);
+        })
       }).catch(error => {
         console.log(error);
       })
