@@ -41,7 +41,9 @@ export default defineComponent({
     }
 
     const ceshi = () => {
-      loading.open({text: '加载中...', time: 4000});
+      loading.open({
+        text: '拼命加载中...'
+      });
     }
 
     return {
