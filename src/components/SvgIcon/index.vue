@@ -1,54 +1,62 @@
 <template>
-<div v-if="external" :style="styleExternalIcon" class="svg-external-icon svg-icon" v-on="$listeners"></div>
-<svg v-else :class="svgClass" aria-hidden="true" v-on="$listeners">
-  <use :href="iconName" />
-</svg>
+  <div v-if="isExternal" :style="styleExternalIcon" class="svg-external-icon svg-icon" />
+  <svg v-else :class="svgClass" aria-hidden="true">
+    <use :href="iconName" />
+  </svg>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from 'vue';
+<script>
+// doc: https://panjiachen.github.io/vue-element-admin-site/feature/component/svg-icon.html#usage
 import { isExternal } from '@/utils/validate'
 
-export default defineComponent({
+export default {
   name: 'SvgIcon',
-
   props: {
     iconClass: {
       type: String,
-      default: ''
+      required: true
     },
-    className: String,
+    className: {
+      type: String,
+      default: ''
+    }
   },
-
-  setup(props) {
-
-    const external = computed(() => {
-      return isExternal(props.iconClass);
-    });
-    const iconName = computed(() => {
-      console.log(props.iconClass);
-      return `#icon-${props.iconClass}`;
-    });
-    const svgClass = computed(() => {
-      if (props.className) {
-        return 'svg-icon ' + props.className;
+  computed: {
+    isExternal() {
+      return isExternal(this.iconClass)
+    },
+    iconName() {
+      return `#icon-${this.iconClass}`
+    },
+    svgClass() {
+      if (this.className) {
+        return 'svg-icon ' + this.className
       } else {
         return 'svg-icon'
       }
-    });
-    const styleExternalIcon = computed(() => {
+    },
+    styleExternalIcon() {
       return {
-        mask: `url(${props.iconClass}) no-repeat 50% 50%`,
-        '-webkit-mask': `url(${props.iconClass}) no-repeat 50% 50%`
+        mask: `url(${this.iconClass}) no-repeat 50% 50%`,
+        '-webkit-mask': `url(${this.iconClass}) no-repeat 50% 50%`
       }
-    });
-
-    return {
-      external,
-      iconName,
-      svgClass,
-      styleExternalIcon
     }
   }
-})
+}
 </script>
+
+<style scoped>
+.svg-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+.svg-external-icon {
+  background-color: currentColor;
+  mask-size: cover!important;
+  display: inline-block;
+}
+</style>
