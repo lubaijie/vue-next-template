@@ -42,16 +42,16 @@ module.exports = {
       .end()
 
       // set preserveWhitespace
-      // config.module
-      //   .rule('vue')
-      //   .use('vue-loader')
-      //   .loader('vue-loader')
-      //   .tap(options => {
-      //     console.log(options);
-      //     // options.compilerOptions.preserveWhitespace = true;
-      //     return options;
-      //   })
-      //   .end()
+      config.module
+        .rule('vue')
+        .use('vue-loader')
+        .loader('vue-loader-v16')
+        .tap(options => {
+          console.log(options);
+          // options.compilerOptions.preserveWhitespace = true;
+          return options;
+        })
+        .end()
 
       config
         .when(process.env.NODE_ENV === 'development',

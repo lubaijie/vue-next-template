@@ -23,7 +23,7 @@ import {
   ref,
   reactive
 } from 'vue';
-import MoveMenu from '../MoveMenu/index.vue'
+import MoveMenu from '../MoveMenu/index'
 export default defineComponent({
   name: 'NavSide',
   components: {
