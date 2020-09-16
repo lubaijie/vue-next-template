@@ -7,6 +7,11 @@ import store from './store'
 import antd from 'ant-design-vue';
 import 'ant-design-vue/components/style'
 
-import './assets/icons/index.js'
+import './assets/icons/index.js';
+import SvgIcon from '@/components/SvgIcon/index.vue';
 
-createApp(App).use(store).use(router).use(antd).mount('#app')
+const app = createApp(App);
+
+app.component('svg-icon', SvgIcon);
+
+app.use(store).use(router).use(antd).mount('#app')
