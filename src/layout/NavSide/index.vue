@@ -3,7 +3,7 @@
   <a-layout style="height: 100%;">
     <a-layout-sider :collapsed-width="collapsedWidth" v-model:collapsed="collapsed" :trigger="null" collapsible>
       <user-info :collapsed="collapsed" />
-      <c-menu />
+      <c-menu :collapsed="collapsed" />
     </a-layout-sider>
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0">
@@ -45,7 +45,7 @@ export default defineComponent({
   setup() {
 
     const collapsed = ref(false);
-    const collapsedWidth = ref(60);
+    const collapsedWidth = ref(80);
     const selectedKeys = reactive(['1']);
 
     let screenWidth = document.body.clientWidth;
@@ -57,7 +57,7 @@ export default defineComponent({
 
         collapsed.value = screenWidth < 1350;
         
-        collapsedWidth.value = screenWidth < 1100 ? 0 : 60;
+        collapsedWidth.value = screenWidth < 1100 ? 0 : 80;
 
         timer = false;
         setTimeout(() => {

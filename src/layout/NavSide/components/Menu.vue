@@ -5,11 +5,12 @@
       <MenuFoldOutlined v-else />
     </a-button> -->
     <a-menu
+      style="text-align: left;"
       v-model:openKeys="openKeys"
       v-model:selectedKeys="selectedKeys"
       mode="inline"
       theme="dark"
-      :inline-collapsed="collapsed"
+      :inline-collapsed="props.collapsed"
     >
       <a-menu-item key="1">
         <PieChartOutlined />
@@ -47,6 +48,21 @@
           </a-menu-item>
         </a-sub-menu>
       </a-sub-menu>
+      <a-sub-menu key="sub4">
+        <template v-slot:title>
+          <span><AppstoreOutlined /><span>Navigation Two</span></span>
+        </template>
+        <a-menu-item key="13">Option 9</a-menu-item>
+        <a-menu-item key="14">Option 10</a-menu-item>
+        <a-sub-menu key="sub5" title="Submenu">
+          <a-menu-item key="15">
+            Option 11
+          </a-menu-item>
+          <a-menu-item key="16">
+            Option 12
+          </a-menu-item>
+        </a-sub-menu>
+      </a-sub-menu>
     </a-menu>
   </div>
 </template>
@@ -66,6 +82,12 @@ import {
 
 export default defineComponent({
   name: 'LeftMenu',
+  props: {
+    collapsed: {
+      type: Boolean,
+      default: false
+    }
+  },
   components: {
     // MenuFoldOutlined,
     // MenuUnfoldOutlined,
@@ -75,28 +97,32 @@ export default defineComponent({
     InboxOutlined,
     AppstoreOutlined,
   },
-  setup() {
-    const collapsed = ref(false);
+  setup(props) {
+    // const collapsed = ref(false);
     const selectedKeys = ref(['1']);
     const openKeys = ref(['sub1']);
     const preOpenKeys = ref(['sub1']);
 
     watch(openKeys, (val, oldVal) => {
       preOpenKeys.value = oldVal;
+    });
+
+    watch(props, val => {
+      openKeys.value = val.collapsed ? [] : preOpenKeys.value;
     })
 
-    const toggleCollapsed = () => {
-      collapsed.value = !collapsed.value;
-      console.log(collapsed.value);
-      openKeys.value = collapsed.value ? [] : preOpenKeys.value;
-    };
+
+    // const toggleCollapsed = () => {
+    //   collapsed.value = !collapsed.value;
+    //   openKeys.value = collapsed.value ? [] : preOpenKeys.value;
+    // };
 
     return {
-      collapsed,
+      props,
       selectedKeys,
       openKeys,
       preOpenKeys,
-      toggleCollapsed
+      // toggleCollapsed
     };
   }
 });
