@@ -38,7 +38,7 @@ const createMenu = e => {
   const list: number[] = [];
   
   const startTime = setInterval(() => {
-    if (list.length > 10) {
+    if (list.length > 10 || !isActivate.value ) {
       clearInterval(startTime);
       return;
     }

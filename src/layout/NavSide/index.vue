@@ -1,19 +1,17 @@
 <template>
 <div style="height: 100%;">
   <a-layout style="height: 100%;">
-    <a-layout-sider collapsed-width="0" v-model:collapsed="collapsed" :trigger="null" collapsible>
-      <!-- <div class="header-container">
-        <div class="header-pic" />
-        <div class="userinfo-container">
-          <div class="userinfo-name">李二蛋</div>
-          <div class="userinfo-job">总经理</div>
-        </div>
-      </div> -->
-      <logo fontSize="45px" />
+    <a-layout-sider :collapsed-width="collapsedWidth" v-model:collapsed="collapsed" :trigger="null" collapsible>
+      <user-info :collapsed="collapsed" />
+      <c-menu />
     </a-layout-sider>
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0">
-        1223
+        <component 
+          v-if="collapsedWidth > 0"
+          :is="collapsed ? 'menu-unfold-outlined' : 'menu-fold-outlined'" 
+          class="trigger"
+          @click="() => (collapsed = !collapsed)"/>
       </a-layout-header>
       <a-layout-content :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }">
         <router-view />
@@ -30,27 +28,36 @@ import {
   ref,
   reactive
 } from 'vue';
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
 import MoveMenu from '../MoveMenu/index';
-import Logo from '../logo.vue'
+import UserInfo from '../UserInfo.vue'
+import CMenu from './components/Menu.vue';
 
 export default defineComponent({
   name: 'NavSide',
   components: {
+    MenuUnfoldOutlined,
+    MenuFoldOutlined,
     MoveMenu,
-    Logo
+    UserInfo,
+    CMenu
   },
   setup() {
 
     const collapsed = ref(false);
+    const collapsedWidth = ref(60);
     const selectedKeys = reactive(['1']);
 
     let screenWidth = document.body.clientWidth;
     let timer = true;
     window.onresize = () => {
       if (timer) {
+
         screenWidth = document.body.clientWidth;
 
         collapsed.value = screenWidth < 1350;
+        
+        collapsedWidth.value = screenWidth < 1100 ? 0 : 60;
 
         timer = false;
         setTimeout(() => {
@@ -61,6 +68,7 @@ export default defineComponent({
 
     return {
       collapsed,
+      collapsedWidth,
       selectedKeys
     }
   }
@@ -68,32 +76,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.header-container{
-  margin: 15px 15px;
-  .header-pic{
-    display: inline-block;
-    width: 60px;
-    height: 60px;
-    border: 1px solid #fff;
-    border-radius: 50%;
-    background-color: #fff;
-    background-image: url('../../assets/images/header.jpg');
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
-  .userinfo-container{
-    display: inline-block;
-    color: #fff;
-    width: calc(100% - 60px);
-    vertical-align: top;
-    .userinfo-name{
-      font-size: 20px;
-      font-weight: 800;
-      font-family: Avenir, Helvetica, Arial, sans-serif;
-    }
-    .userinfo-job{
-
-    }
+.trigger{
+  font-size: 24px;
+  float: left;
+  line-height: 70px;
+  margin-left: 15px;
+  :hover{
+    color: #1890ff;
   }
 }
 </style>
