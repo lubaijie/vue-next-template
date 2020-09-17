@@ -1,9 +1,9 @@
 <template>
   <div>
-    <a-button type="primary" @click="toggleCollapsed" style="margin-bottom: 16px">
+    <!-- <a-button type="primary" @click="toggleCollapsed" style="margin-bottom: 16px">
       <MenuUnfoldOutlined v-if="collapsed" />
       <MenuFoldOutlined v-else />
-    </a-button>
+    </a-button> -->
     <a-menu
       v-model:openKeys="openKeys"
       v-model:selectedKeys="selectedKeys"
@@ -54,8 +54,8 @@
 <script>
 import { defineComponent, ref, watch } from 'vue'
 import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
+  // MenuFoldOutlined,
+  // MenuUnfoldOutlined,
   PieChartOutlined,
   MailOutlined,
   DesktopOutlined,
@@ -67,8 +67,8 @@ import {
 export default defineComponent({
   name: 'LeftMenu',
   components: {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
+    // MenuFoldOutlined,
+    // MenuUnfoldOutlined,
     PieChartOutlined,
     MailOutlined,
     DesktopOutlined,
@@ -88,7 +88,7 @@ export default defineComponent({
     const toggleCollapsed = () => {
       collapsed.value = !collapsed.value;
       console.log(collapsed.value);
-      // openKeys.value = collapsed.value ? [] : preOpenKeys.value;
+      openKeys.value = collapsed.value ? [] : preOpenKeys.value;
     };
 
     return {
