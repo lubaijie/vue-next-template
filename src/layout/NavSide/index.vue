@@ -31,7 +31,7 @@ import {
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
 import MoveMenu from '../MoveMenu/index';
 import UserInfo from '../UserInfo.vue'
-import CMenu from './components/Menu.vue';
+import CMenu from './components/Menu';
 
 export default defineComponent({
   name: 'NavSide',

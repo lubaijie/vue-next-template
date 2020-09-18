@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import layout from '@/layout/index.vue'
+import transit from '@/views/transit.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -12,19 +13,33 @@ const routes: Array<RouteRecordRaw> = [
         path: '/',
         name: 'Home',
         component: () => import('../views/Home.vue')
+      },
+      {
+        path: '/test',
+        name: 'Test',
+        component: transit,
+        children: [
+          {
+            path: '/test',
+            name: 'Test',
+            component: transit,
+            children: [
+              {
+                path: '/test',
+                name: 'Test',
+                component: () => import('@/views/test.vue'),
+              }
+            ]
+          },
+          {
+            path: '/about',
+            name: 'About',
+            component: () => import('@/views/About.vue'),
+          }
+        ]
       }
     ]
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue')
-  },
-  {
-    path: '/test',
-    name: 'Test',
-    component: () => import('@/views/test.vue')
-  },
+  }, 
   {
     path: '/login',
     name: 'Login',

@@ -1,0 +1,8 @@
+.menu-container{
+  height: calc(100% - 200px);
+  overflow: auto;
+  scrollbar-color: transparent transparent;
+  scrollbar-track-color: transparent;
+  -ms-scrollbar-track-color: transparent;
+  &::-webkit-scrollbar { width: 0 !important }
+}

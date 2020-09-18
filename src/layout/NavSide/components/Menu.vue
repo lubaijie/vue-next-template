@@ -1,9 +1,5 @@
 <template>
-  <div>
-    <!-- <a-button type="primary" @click="toggleCollapsed" style="margin-bottom: 16px">
-      <MenuUnfoldOutlined v-if="collapsed" />
-      <MenuFoldOutlined v-else />
-    </a-button> -->
+  <div class="menu-container">
     <a-menu
       style="text-align: left;"
       v-model:openKeys="openKeys"
@@ -13,7 +9,7 @@
       :inline-collapsed="props.collapsed"
     >
       <a-menu-item key="1">
-        <PieChartOutlined />
+        <svg-icon icon-class="test" />
         <span>Option 1</span>
       </a-menu-item>
       <a-menu-item key="2">
@@ -25,7 +21,7 @@
         <span>Option 3</span>
       </a-menu-item>
       <a-sub-menu key="sub1">
-        <template v-slot:title>
+        <template>
           <span><MailOutlined /><span>Navigation One</span></span>
         </template>
         <a-menu-item key="5">Option 5</a-menu-item>
@@ -48,30 +44,14 @@
           </a-menu-item>
         </a-sub-menu>
       </a-sub-menu>
-      <a-sub-menu key="sub4">
-        <template v-slot:title>
-          <span><AppstoreOutlined /><span>Navigation Two</span></span>
-        </template>
-        <a-menu-item key="13">Option 9</a-menu-item>
-        <a-menu-item key="14">Option 10</a-menu-item>
-        <a-sub-menu key="sub5" title="Submenu">
-          <a-menu-item key="15">
-            Option 11
-          </a-menu-item>
-          <a-menu-item key="16">
-            Option 12
-          </a-menu-item>
-        </a-sub-menu>
-      </a-sub-menu>
     </a-menu>
   </div>
 </template>
 
 <script>
 import { defineComponent, ref, watch } from 'vue'
+import router from '@/router/index'
 import {
-  // MenuFoldOutlined,
-  // MenuUnfoldOutlined,
   PieChartOutlined,
   MailOutlined,
   DesktopOutlined,
@@ -89,41 +69,44 @@ export default defineComponent({
     }
   },
   components: {
-    // MenuFoldOutlined,
-    // MenuUnfoldOutlined,
-    PieChartOutlined,
+    // PieChartOutlined,
     MailOutlined,
     DesktopOutlined,
     InboxOutlined,
     AppstoreOutlined,
   },
   setup(props) {
-    // const collapsed = ref(false);
     const selectedKeys = ref(['1']);
     const openKeys = ref(['sub1']);
-    const preOpenKeys = ref(['sub1']);
-
+    const preOpenKeys = ['sub1'];
     watch(openKeys, (val, oldVal) => {
       preOpenKeys.value = oldVal;
     });
-
     watch(props, val => {
-      openKeys.value = val.collapsed ? [] : preOpenKeys.value;
+      openKeys.value = val.collapsed ? [] : preOpenKeys;
     })
 
-
-    // const toggleCollapsed = () => {
-    //   collapsed.value = !collapsed.value;
-    //   openKeys.value = collapsed.value ? [] : preOpenKeys.value;
-    // };
+    const { options } = router;
+    const routerDatas = options.routes;
 
     return {
       props,
       selectedKeys,
       openKeys,
-      preOpenKeys,
-      // toggleCollapsed
+
+      routerDatas
     };
   }
 });
 </script>
+
+<style lang="scss" scoped>
+.menu-container{
+  height: calc(100% - 200px);
+  overflow: auto;
+  scrollbar-color: transparent transparent;
+  scrollbar-track-color: transparent;
+  -ms-scrollbar-track-color: transparent;
+  &::-webkit-scrollbar { width: 0 !important }
+}
+</style>
