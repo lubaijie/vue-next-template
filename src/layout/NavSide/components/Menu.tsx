@@ -22,15 +22,21 @@ export default defineComponent({
       openKeys.value = val.collapsed ? [] : preOpenKeys;
     })
 
+
     const { options } = router;
     const routerDatas = options.routes;
-
     const createMenu = (routers: object[], keyCode) => {
       return routers.map((item: any, index) => {
         if (!item.hidden) {
           if (item.children) {
             return (
-            <a-sub-menu key={keyCode + index} title={<div><svg-icon iconClass="test" /><span>{item.name}</span></div>}>
+            <a-sub-menu key={keyCode + index} title=
+            {
+              <div>
+                <svg-icon iconClass={item.meta.icon} class="menu-icon" />
+                <span>{item.meta.title ? item.meta.title : item.name}</span>
+              </div>
+            }>
                 {
                   createMenu(item.children, index + '')
                 }
