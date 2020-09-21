@@ -1,55 +1,28 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import layout from '@/layout/index.vue'
-import transit from '@/views/transit.vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import routes from './routes';
+import Nprogress from 'nprogress';
+import Config from '@/config';
+import store from '@/store'
 
-const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    name: 'Index',
-    component: layout,
-    meta: { title: '首页' },
-    children: [
-      {
-        path: '/',
-        name: 'Home',
-        component: () => import('../views/Home.vue')
-      },
-      {
-        path: '/test',
-        name: 'Test',
-        component: transit,
-        children: [
-          {
-            path: '/test',
-            name: 'Test',
-            component: transit,
-            children: [
-              {
-                path: '/test',
-                name: 'Test',
-                component: () => import('@/views/test.vue'),
-              }
-            ]
-          },
-          {
-            path: '/about',
-            name: 'About',
-            component: () => import('@/views/About.vue'),
-          }
-        ]
-      }
-    ]
-  }, 
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@/views/login/index.vue')
-  }
-]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title + '-' + Config.title;
+  }
+  Nprogress.start();
+
+  const myStore = store.state as any;
+  if (myStore.user.token) {
+    console.log('OK!');
+  } else {
+    console.log('NO!');
+  }
+  next();
 })
 
 export default router

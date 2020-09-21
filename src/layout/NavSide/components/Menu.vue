@@ -52,7 +52,6 @@
 import { defineComponent, ref, watch } from 'vue'
 import router from '@/router/index'
 import {
-  PieChartOutlined,
   MailOutlined,
   DesktopOutlined,
   InboxOutlined,

@@ -28,25 +28,23 @@ export default defineComponent({
     const createMenu = (routers: object[], keyCode) => {
       return routers.map((item: any, index) => {
         if (!item.hidden) {
+          let iconElement: JSX.Element | null = null
+          if (item.meta.icon !== null && item.meta.icon !== '') {
+            iconElement = <div class="menu-icon-container"><svg-icon iconClass={item.meta.icon} class="menu-icon" /></div>
+          }
+          const titleElement = <span class="menu-title">{item.meta.title !== null && item.meta.title !== '' ? item.meta.title : item.name}</span>
+          const subMenu = routers === routerDatas ? (props.collapsed ? <div>{iconElement}</div> : <div>{iconElement}{titleElement}</div>) : <div>{titleElement}</div>
           if (item.children) {
             return (
-            <a-sub-menu key={keyCode + index} title=
-            {
-              <div>
-                <svg-icon iconClass={item.meta.icon} class="menu-icon" />
-                <span>{item.meta.title ? item.meta.title : item.name}</span>
-              </div>
-            }>
-                {
-                  createMenu(item.children, index + '')
-                }
+              <a-sub-menu key={keyCode + index} title={subMenu}>
+                {createMenu(item.children, index + '')}
               </a-sub-menu>
             )
           } else {
             return (
-            <a-menu-item key={keyCode + index}>
-              <router-link to={item.path}>{item.name}</router-link>
-            </a-menu-item>
+              <a-menu-item key={keyCode + index}>
+                <router-link to={item.path}>{subMenu}</router-link>
+              </a-menu-item>
             )
           }
         }

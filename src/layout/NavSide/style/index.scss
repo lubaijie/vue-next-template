@@ -5,7 +5,15 @@
   scrollbar-track-color: transparent;
   -ms-scrollbar-track-color: transparent;
   &::-webkit-scrollbar { width: 0 !important }
-  .menu-icon{
-    font-size: 20px;
+  .menu-icon-container{
+    display: inline-block;
+    vertical-align: sub;
+    .menu-icon{
+      font-size: 24px;
+    }
+  }
+  .menu-title{
+    display: inline-block;
+    margin-left: 10px;
   }
 }

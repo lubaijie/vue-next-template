@@ -1,7 +1,7 @@
 <template>
 <div class="login-panel-container">
   <a-form ref="loginForm" :model="form" :rules="rules">
-    <a-tabs :activeKey="customActiveKey.value" @change="handleTabClick" :tabBarStyle="{ textAlign: 'center', borderBottom: 'unset' }">
+    <a-tabs :activeKey="customActiveKey" @change="handleTabClick" :tabBarStyle="{ textAlign: 'center', borderBottom: 'unset' }">
       <a-tab-pane key="1" tab="账号密码登录">
         <a-form-item name="username">
           <a-input v-model:value="form.username" placeholder="用户名" size="large">
@@ -60,9 +60,10 @@ import {
   ref
 } from 'vue'
 import { UserOutlined, LockOutlined, MobileOutlined, MailOutlined } from '@ant-design/icons-vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router'
 
 import { encrypt } from '@/utils/rsaEncrypt';
-import { login } from '@/api/user'
 
 export default defineComponent({
   name: 'LoginPanel',
@@ -134,14 +135,19 @@ export default defineComponent({
       });
     }
 
+    const store = useStore();
+    const router = useRouter();
+    // const route = useRoute();
+
     // 提交
     const submit = () => {
       const { validateFields }: any = loginForm.value;
       const filedNames = customActiveKey.value === '1' ? ['username', 'password'] : ['phone','code'];
       validateFields(filedNames).then(value => {
         value.password = encrypt(value.password);
-        login(value).then(res => {
-          console.log(res);
+
+        store.dispatch('user/Login', value).then(() => {
+          router.push({path: '/'});
         })
       }).catch(error => {
         console.log(error);
