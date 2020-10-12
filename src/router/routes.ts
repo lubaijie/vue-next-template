@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from 'vue-router'
-import layout from '@/layout/index.vue'
+import layout from '@/layout/index'
 import transit from '@/views/transit.vue'
 
 
@@ -63,7 +63,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/login/index.vue'),
+    component: () => import('@/views/login/index'),
     meta: { title: '登录', icon: 'test' }
   }
 ]

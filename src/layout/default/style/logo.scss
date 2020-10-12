@@ -1,0 +1,26 @@
+.logo-container{
+  overflow: hidden;
+  height: 64px;
+  line-height: 64px;
+  .logo-img{
+    height: 50px;
+    width: 50px;
+  }
+  .logo-title{
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 26px;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}

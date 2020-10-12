@@ -1,21 +1,31 @@
-import { defineComponent, ref, Teleport } from 'vue';
+import { defineComponent, ref, Transition } from 'vue';
+import '@/style/test.scss';
 
-const node: any = ref(null);
+const isFade = ref(true);
 
 const test = () => {
-  if (node.value === null) {
-    node.value = <Teleport to="body"><div>测试</div></Teleport>
-  } else {
-    node.value = null;
-  }
+  isFade.value = !isFade.value;
 }
 
 const test2 = defineComponent({
+  directives: {
+    fade: {
+      mounted(el) {
+        console.log(el);
+      },
+      beforeUnmount(el){
+        console.log(el);
+        console.log('卸载');
+      }
+    }
+  },
   setup() {
     return () => (
       <div>
         <a-button onClick={test}>测试2</a-button>
-        {node.value}
+        <Transition name="fade">
+          {isFade.value ? <div v-fade>显示</div> : null}
+        </Transition>
       </div>     
     )
   }

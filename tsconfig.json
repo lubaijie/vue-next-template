@@ -33,7 +33,7 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx", "src/utils/request.js", "src/assets/icons/index.js", "src/Type.t.ds"
+    "tests/**/*.tsx", "src/utils/request.js", "src/assets/icons/index.js", "src/Type.t.ds", "src/layout/default/components/logo.jsx"
   ],
   "exclude": [
     "node_modules"

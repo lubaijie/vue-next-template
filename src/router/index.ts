@@ -18,11 +18,20 @@ router.beforeEach((to, from, next) => {
 
   const myStore = store.state as any;
   if (myStore.user.token) {
-    console.log('OK!');
+    if (to.path === '/login') {
+      next({ path: '/' });
+      Nprogress.done();
+    } else {
+      // 判断用户是否拉取菜单
+      next();
+    }
   } else {
-    console.log('NO!');
+    if (to.path === '/login') {
+      next();
+    } else {
+      next(`/login?redirect=${to.fullPath}`);
+    }
   }
-  next();
 })
 
 export default router

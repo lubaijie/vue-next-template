@@ -1,7 +1,8 @@
 import { login } from '@/api/login'
+import { getToken, setToken } from '@/utils/auth';
 
 const state = {
-  token: null,
+  token: getToken(),
   roles: [],
   user: null,
 };
@@ -29,6 +30,7 @@ const actions = {
           commit('TOKEN', res.data.token);
           commit('ROLES', res.data.user.roles);
           commit('USER', res.data.user.user);
+          setToken(res.data.token, true);
           resolve();
         } else {
           reject(res.msg);

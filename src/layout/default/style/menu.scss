@@ -1,5 +1,5 @@
 .menu-container{
-  height: calc(100% - 200px);
+  height: calc(100% - 90px);
   overflow: auto;
   scrollbar-color: transparent transparent;
   scrollbar-track-color: transparent;
@@ -15,19 +15,5 @@
   .menu-title{
     display: inline-block;
     margin-left: 10px;
-  }
-}
-
-.top-nav-container{
-  height: 100%;
-  .top-nav-setting{
-    float: right;
-    line-height: 70px;
-    display: inline-block;
-    padding: 0 20px;
-    font-size: 24px;
-    &:hover{
-      color: #096dd9;
-    }
   }
 }
