@@ -25,18 +25,24 @@ export default defineComponent({
 
     const { options } = router;
     const routerDatas = options.routes;
+    console.log(routerDatas);
     const createMenu = (routers: object[], keyCode) => {
       return routers.map((item: any, index) => {
         if (!item.hidden) {
           if (item.children) {
+            let iconNode: JSX.Element | null = null;
+            if (item.meta.icon) {
+              iconNode = <svg-icon iconClass={item.meta.icon} class="menu-icon" />
+            }
+
+            let titleNode: JSX.Element | null = null;
+            if (item.meta.title) {
+              titleNode = <span>{item.meta.title}</span>
+            } else {
+              titleNode = <span>{item.name}</span>
+            }
             return (
-            <a-sub-menu key={keyCode + index} title=
-            {
-              <div>
-                <svg-icon iconClass={item.meta.icon} class="menu-icon" />
-                <span>{item.meta.title ? item.meta.title : item.name}</span>
-              </div>
-            }>
+              <a-sub-menu key={keyCode + index} title={<div>{iconNode}{titleNode}</div>}>
                 {
                   createMenu(item.children, index + '')
                 }
