@@ -19,7 +19,7 @@ const routes: Array<RouteRecordRaw> = [
           {
             path: '/system/data/table',
             name: 'SystemDataTable',
-            meta: { title: '数据表', icon: 'System' },
+            meta: { title: '数据表', icon: 'table' },
             component: () => import('@/views/system/data/table')
           }
         ]

@@ -21,7 +21,7 @@ router.beforeEach((to, from, next) => {
   const myStore = store.state as any;
   if (myStore.user.token) {
     if (to.path === '/login') {
-      next({ path: '/login' });
+      next({ path: '/' });
       Nprogress.done();
     } else {
       // 判断用户是否拉取菜单
