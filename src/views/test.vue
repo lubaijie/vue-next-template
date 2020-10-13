@@ -1,10 +1,13 @@
 <template>
-<div ref="root">
-  <a-button @click="t">测试</a-button>
-  <div class="test">
-    <div style="height: 400px">123433234</div>
+  <div ref="root">
+    <a-button @click="isFade = !isFade">测试</a-button>
+    <div class="test">
+      <div style="height: 400px">123433234</div>
+    </div>
+    <transition name="fade">
+      <div v-if="isFade">测试测试</div>
+    </transition> 
   </div>
-</div>
 </template>
 
 <script>
@@ -24,6 +27,7 @@ import loading from '@/components/Loading/service.tsx'
 
 export default defineComponent({
   setup() {
+    const isFade = ref(true);
     const root = ref(null);
 
     // const store = useStore();
@@ -52,7 +56,8 @@ export default defineComponent({
     return {
       root,
       t,
-      ceshi
+      ceshi,
+      isFade
     }
   }
 })
@@ -85,5 +90,15 @@ export default defineComponent({
   // &::-webkit-scrollbar-track {
   //   background: #ededed;
   // }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

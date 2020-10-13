@@ -1,25 +1,20 @@
-import { defineComponent, ref, watch } from 'vue'
-import router from '@/router/index'
-import '../style/index.scss'
+import { defineComponent, ref, watch, inject } from 'vue';
+import router from '@/router/index';
+import '../style/menu.scss';
 
 
 export default defineComponent({
   name: 'LeftMenu',
-  props: {
-    collapsed: {
-      type: Boolean,
-      default: false
-    }
-  },
-  setup(props) {
+  setup() {
+    const collapsed: any = inject('collapsed');
     const selectedKeys = ref(['1']);
     const openKeys = ref(['sub1']);
     let preOpenKeys = ['sub1'];
     watch(openKeys, (val, oldVal) => {
       preOpenKeys = oldVal;
     });
-    watch(props, val => {
-      openKeys.value = val.collapsed ? [] : preOpenKeys;
+    watch(collapsed, val => {
+      openKeys.value = val ? [] : preOpenKeys;
     })
 
 
@@ -33,7 +28,8 @@ export default defineComponent({
             iconElement = <div class="menu-icon-container"><svg-icon iconClass={item.meta.icon} class="menu-icon" /></div>
           }
           const titleElement = <span class="menu-title">{item.meta.title !== null && item.meta.title !== '' ? item.meta.title : item.name}</span>
-          const subMenu = routers === routerDatas ? (props.collapsed ? <div>{iconElement}</div> : <div>{iconElement}{titleElement}</div>) : <div>{titleElement}</div>
+          // const subMenu = routers === routerDatas ? (collapsed.value ? <div>{iconElement}</div> : <div>{iconElement}{titleElement}</div>) : <div>{titleElement}</div>
+          const subMenu = collapsed.value ? <div>{iconElement}</div> : <div>{iconElement}{titleElement}</div>
           if (item.children) {
             return (
               <a-sub-menu key={keyCode + index} title={subMenu}>
@@ -59,7 +55,7 @@ export default defineComponent({
           vModel_selectedKeys={selectedKeys.value}
           mode="inline"
           theme="dark"
-          inlineCollapsed={props.collapsed}>
+          inlineCollapsed={collapsed.value}>
             {
               createMenu(routerDatas, '')
             }

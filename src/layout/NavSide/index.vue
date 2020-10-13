@@ -12,6 +12,7 @@
           :is="collapsed ? 'menu-unfold-outlined' : 'menu-fold-outlined'" 
           class="trigger"
           @click="() => (collapsed = !collapsed)"/>
+          <c-top-nav />
       </a-layout-header>
       <a-layout-content :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }">
         <router-view />
@@ -32,6 +33,7 @@ import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
 import MoveMenu from '../MoveMenu/index';
 import UserInfo from '../UserInfo.vue'
 import CMenu from './components/Menu';
+import CTopNav from './components/TopNav'
 
 export default defineComponent({
   name: 'NavSide',
@@ -40,7 +42,8 @@ export default defineComponent({
     MenuFoldOutlined,
     MoveMenu,
     UserInfo,
-    CMenu
+    CMenu,
+    CTopNav
   },
   setup() {
 

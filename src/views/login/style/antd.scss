@@ -1,0 +1,24 @@
+.ant-input{
+  background-color: $inputBgColor;
+  border: none;
+  color: $color;
+}
+
+.ant-input-password-icon {
+  color: rgb(255 255 255);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+// 表单校验样式
+.has-error .ant-input, .has-error .ant-input:hover {
+  background-color: $inputBgColor;
+  border: 1px solid;
+  border-color: #f5222d;
+}
+
+.has-error .ant-form-explain, .has-error .ant-form-split {
+  color: #f5222d;
+  text-align: initial;
+  margin-top: 2px;
+}

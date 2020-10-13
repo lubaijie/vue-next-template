@@ -1,0 +1,42 @@
+@import '@/style/index.scss';
+@import './antd.scss';
+
+.login-container{
+  color: $color;
+  background-color: $bgColor;
+  background-image: url('/img/background.svg');
+  padding-top: 10%;
+  .title-container {
+    .logo {
+      height: 60px;
+    }
+
+    .title {
+      display: inline-block;
+      font-size: 38px;
+      font-weight: bold;
+      vertical-align: middle;
+      margin-left: 15px;
+    }
+  }
+  .from-container {
+    width: 350px;
+    margin: 0 auto;
+    margin-top: 40px;
+    .autologin{
+      float: left;
+      color: $color;
+    }
+    .submit{
+      width: 100%;
+      height: 40px;
+      font-weight: 600;
+      font-size: initial;
+      letter-spacing: 8px;
+    }
+    .form-icon{
+      color: $color;
+      font-size: 16px;
+    }
+  }
+}

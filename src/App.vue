@@ -5,13 +5,8 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  onMounted
-} from 'vue';
-import {
-  useStore
-} from 'vuex'
+import { defineComponent, onMounted } from 'vue';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   setup() {
@@ -28,23 +23,22 @@ export default defineComponent({
       } else {
         store.dispatch('app/device', 'pc');
       }
-    })
+    });
   }
 })
 </script>
 
 <style lang="less">
-body {
-  height: 100%;
-}
-
 #app {
-  height: 100%;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100%;
+  >div{
+    height: 100%;
+  }
 }
 
 #nav {

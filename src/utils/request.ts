@@ -1,6 +1,6 @@
 import axios from 'axios';
 // import router from '@/router';
-import config from '@/config';
+import config from '@/config.ts';
 import { getToken } from './auth';
 import { notification }  from 'ant-design-vue'
 import loading from '@/components/Loading/service';
