@@ -3,11 +3,10 @@ import '@/style/test.scss';
 
 const isFade = ref(true);
 
-const test = () => {
-  isFade.value = !isFade.value;
-}
+
 
 const test2 = defineComponent({
+  name: 'Test2',
   directives: {
     fade: {
       mounted(el) {
@@ -20,9 +19,10 @@ const test2 = defineComponent({
     }
   },
   setup() {
+
     return () => (
       <div>
-        <a-button onClick={test}>测试2</a-button>
+        <a-button>测试2</a-button>
         <Transition name="fade">
           {isFade.value ? <div v-fade>显示</div> : null}
         </Transition>

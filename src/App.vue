@@ -5,13 +5,8 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  onMounted
-} from 'vue';
-import {
-  useStore
-} from 'vuex'
+import { defineComponent, onMounted } from 'vue';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   setup() {
@@ -28,7 +23,7 @@ export default defineComponent({
       } else {
         store.dispatch('app/device', 'pc');
       }
-    })
+    });
   }
 })
 </script>

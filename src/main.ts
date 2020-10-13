@@ -14,4 +14,6 @@ const app = createApp(App);
 
 app.component('svg-icon', SvgIcon);
 
-app.use(store).use(router).use(antd).mount('#app')
+app.use(store).use(router).use(antd).mount('#app');
+
+export { app };

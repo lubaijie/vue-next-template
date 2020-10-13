@@ -2,7 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import routes from './routes';
 import Nprogress from 'nprogress';
 import Config from '@/config';
-import store from '@/store'
+import store from '@/store';
+
+// import { getToken } from '@/utils/auth';
 
 
 const router = createRouter({
@@ -19,7 +21,7 @@ router.beforeEach((to, from, next) => {
   const myStore = store.state as any;
   if (myStore.user.token) {
     if (to.path === '/login') {
-      next({ path: '/' });
+      next({ path: '/login' });
       Nprogress.done();
     } else {
       // 判断用户是否拉取菜单

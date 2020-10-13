@@ -28,7 +28,8 @@ export default defineComponent({
             iconElement = <div class="menu-icon-container"><svg-icon iconClass={item.meta.icon} class="menu-icon" /></div>
           }
           const titleElement = <span class="menu-title">{item.meta.title !== null && item.meta.title !== '' ? item.meta.title : item.name}</span>
-          const subMenu = routers === routerDatas ? (collapsed.value ? <div>{iconElement}</div> : <div>{iconElement}{titleElement}</div>) : <div>{titleElement}</div>
+          // const subMenu = routers === routerDatas ? (collapsed.value ? <div>{iconElement}</div> : <div>{iconElement}{titleElement}</div>) : <div>{titleElement}</div>
+          const subMenu = collapsed.value ? <div>{iconElement}</div> : <div>{iconElement}{titleElement}</div>
           if (item.children) {
             return (
               <a-sub-menu key={keyCode + index} title={subMenu}>

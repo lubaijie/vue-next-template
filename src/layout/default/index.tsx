@@ -4,6 +4,7 @@ import './style/index.scss';
 
 import Menu from './components/menu';
 import Logo from './components/logo';
+import Header from './components/header';
 
 const DefaultLayOut = defineComponent({
   setup() {
@@ -33,7 +34,7 @@ const DefaultLayOut = defineComponent({
           <a-layout>
             <div class="layout-content">
               <a-layout-header style="background-color: #fff; padding: 0">
-                <div>header</div>
+                <Header />
               </a-layout-header>
               <a-layout-content class="main-container">
                 <RouterView />

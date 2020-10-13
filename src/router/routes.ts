@@ -5,6 +5,28 @@ import transit from '@/views/transit.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
+    path: '/system',
+    name: 'System',
+    component: layout,
+    meta: { title: '系统', icon: 'System' },
+    children: [
+      {
+        path: '/system/data',
+        name: 'SystemData',
+        component: transit,
+        meta: { title: '数据', icon: 'data' },
+        children: [
+          {
+            path: '/system/data/table',
+            name: 'SystemDataTable',
+            meta: { title: '数据表', icon: 'System' },
+            component: () => import('@/views/system/data/table')
+          }
+        ]
+      }      
+    ]
+  },
+  {
     path: '/',
     name: 'Index',
     component: layout,
@@ -19,39 +41,9 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/test',
         name: 'Test',
-        component: transit,
-        meta: { title: '测试', icon: 'all' },
-        children: [
-          {
-            path: '/test',
-            name: 'Test',
-            component: transit,
-            meta: { title: '测试', icon: 'test' },
-            children: [
-              {
-                path: '/test',
-                name: 'Test',
-                component: () => import('@/views/test.vue'),
-                meta: { title: '测试', icon: 'test' }
-              }
-            ]
-          },
-          {
-            path: '/about',
-            name: 'About',
-            component: () => import('@/views/About.vue'),
-            meta: { title: '关于', icon: 'test' }
-          }
-        ]
-      }
-    ]
-  }, 
-  {
-    path: '/test2',
-    name: 'Test2',
-    component: layout,
-    meta: { title: '测试2', icon: 'all' },
-    children: [
+        component: () => import('@/views/test.vue'),
+        meta: { title: '测试1', icon: 'all' },
+      },
       {
         path: '/test2',
         name: '测试2',
@@ -64,7 +56,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/login',
     name: 'Login',
     component: () => import('@/views/login/index'),
-    meta: { title: '登录', icon: 'test' }
+    meta: { title: '登录', icon: 'test', hidden: true },
   }
 ]
 
