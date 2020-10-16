@@ -1,6 +1,7 @@
 import G6 from '@antv/g6'
 import { diamond } from '@/packages/graph/nodes/diamond'
 import { tableNode } from '@/packages/graph/nodes/tableNode'
+// import { test } from '@/api/test';
 
 
 export default class Gd {
@@ -10,8 +11,8 @@ export default class Gd {
 
     const data = {
       nodes: [
-        { id: 'node1', x: 200, y: 100, type: 'tablenode', tableName: 'sys_user' }, // 最简单的
-        { id: 'node2', x: 350, y: 400, type: 'tablenode', tableName: 'sys_user' }, // 添加宽高
+        { id: 'node1', x: 200, y: 100, type: 'tablenode', tableName: 'sys_user', fields: ['id','name','age','isdel','username'] }, // 最简单的
+        { id: 'node2', x: 350, y: 400, type: 'tablenode', tableName: 'sys_user', fields: ['id','name','age','isdel','username'] }, // 添加宽高
         // { id: 'node3', x: 250, y: 100, color: 'red', type: 'diamond' }, // 添加颜色
         // { id: 'node4', x: 350, y: 100, label: '菱形', type: 'diamond' }, // 附加文本
       ],
@@ -32,8 +33,9 @@ export default class Gd {
 
     // 点击时选中，再点击时取消
     graph.on('node:click', (ev) => {
-      // console.log(ev);
       const node = ev.item;
+      // const el: any = document.getElementsByClassName('table-node-left-circle');
+      // .addEventListener()
       graph.setItemState(node, 'selected', !node.hasState('selected')); // 切换选中
     });
   }

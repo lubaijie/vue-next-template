@@ -1,9 +1,13 @@
 import { defineComponent } from "vue";
+import GG from '@/components/test';
+
 
 const SystemDataTable = defineComponent({
-  render() {
-    return (
-      <div>数据</div>
+  setup() {
+    // const mountNode: any = ref();
+
+    return () => (
+      <div><GG /></div>
     )
   }
 });

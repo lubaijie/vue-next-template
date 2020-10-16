@@ -1,10 +1,7 @@
 import { defineComponent, onMounted, ref } from 'vue';
+import '@/style/test.scss';
 
 import gd from './gd'
-
-interface TestProps {
-  content: string;
-}
 
 export default defineComponent ({
   name: 'Test',
@@ -14,11 +11,11 @@ export default defineComponent ({
   },
   
 
-  setup(props) {
+  setup() {
 
     // const { content } = props;
     onMounted(() => {
-      console.log(props.content);
+      // console.log(props.content);
       gd.init();
     })
 
