@@ -1,14 +1,14 @@
 import { defineComponent } from 'vue';
 import '../style/header.scss';
 
-import SearchMenu from './search';
+import MenuSearch from '@/layout/MenuSearch';
 
 export default defineComponent({
   name: 'DefaultLayOutHeader',
   setup() {
     return () => (
       <div class="header-container">
-        <SearchMenu />
+        <MenuSearch />
       </div>
     )
   }

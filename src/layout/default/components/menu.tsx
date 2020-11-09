@@ -1,10 +1,11 @@
 import { defineComponent, ref, watch, inject } from 'vue';
 import router from '@/router/index';
 import '../style/menu.scss';
+import { AppRouteRecordRaw } from '@/router/types';
 
 
 export default defineComponent({
-  name: 'LeftMenu',
+  name: 'Menu',
   setup() {
     const collapsed: any = inject('collapsed');
     const selectedKeys = ref(['1']);
@@ -15,14 +16,13 @@ export default defineComponent({
     });
     watch(collapsed, val => {
       openKeys.value = val ? [] : preOpenKeys;
-    })
-
-
+    });
+    // console.log(router.currentRoute.value);
     const { options } = router;
     const routerDatas = options.routes;
-    const createMenu = (routers: object[], keyCode) => {
-      return routers.map((item: any, index) => {
-        if (!item.hidden) {
+    const createMenu = (routers: AppRouteRecordRaw[]) => {
+      return routers.map((item: AppRouteRecordRaw) => {
+        if (!item.meta.hidden) {
           let iconElement: JSX.Element | null = null
           if (item.meta.icon !== null && item.meta.icon !== '') {
             iconElement = <div class="menu-icon-container"><svg-icon iconClass={item.meta.icon} class="menu-icon" /></div>
@@ -32,13 +32,13 @@ export default defineComponent({
           const subMenu = collapsed.value ? <div>{iconElement}</div> : <div>{iconElement}{titleElement}</div>
           if (item.children) {
             return (
-              <a-sub-menu key={keyCode + index} title={subMenu}>
-                {createMenu(item.children, index + '')}
+              <a-sub-menu key={item.key} title={subMenu}>
+                {createMenu(item.children)}
               </a-sub-menu>
             )
           } else {
             return (
-              <a-menu-item key={keyCode + index}>
+              <a-menu-item key={item.key}>
                 <router-link to={item.path}>{subMenu}</router-link>
               </a-menu-item>
             )
@@ -57,7 +57,7 @@ export default defineComponent({
           theme="dark"
           inlineCollapsed={collapsed.value}>
             {
-              createMenu(routerDatas, '')
+              createMenu(routerDatas as AppRouteRecordRaw[])
             }
         </a-menu>
       </div>

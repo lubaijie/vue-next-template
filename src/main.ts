@@ -5,7 +5,7 @@ import router from './router'
 import store from './store'
 
 import antd from 'ant-design-vue';
-import 'ant-design-vue/components/style'
+import 'ant-design-vue/dist/antd.css';
 
 import './assets/icons/index.js';
 import SvgIcon from '@/components/SvgIcon/index.vue';

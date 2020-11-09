@@ -1,3 +1,5 @@
+@import '../../../style/var/index.scss';
+
 .menu-container{
   height: calc(100% - 90px);
   overflow: auto;
@@ -15,5 +17,21 @@
   .menu-title{
     display: inline-block;
     margin-left: 10px;
+  }
+
+  .ant-menu-inline-collapsed {
+    width: $layout-menu--collapsed-width;
+    .ant-menu-submenu{
+      .ant-menu-submenu-title{
+        left: 0;
+        padding: 0 10px !important;
+        text-overflow: clip;
+      }
+    }
+    .ant-menu-item{
+      left: 0;
+      padding: 0 10px !important;
+      text-overflow: clip;
+    }
   }
 }
