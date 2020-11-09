@@ -24,7 +24,7 @@ const DefaultLayOut = defineComponent({
             v-model={[collapsed.value, 'collapsed']} 
             trigger={null} 
             collapsible 
-            collapsedWidth={80}
+            collapsedWidth={48}
             onMouseover={openSider} 
             onMouseleave={closeSider}
             style={{color: "#fff"}}>

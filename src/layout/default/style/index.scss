@@ -1,3 +1,5 @@
+@import '../../../style/var/index.scss';
+
 .layout-sider{
   position: absolute;
   height: 100%;
@@ -5,10 +7,16 @@
 }
 .layout-content{
   height: 100%;
-  width: calc(100% - 80px);
+  width: calc(100% - 48px);
   position: absolute;
-  left: 80px;
+  left: $layout-menu--collapsed-width;
   z-index: 0;
+  .ant-layout-header {
+    height: $layout-header-height;
+    padding: 0px;
+    line-height: 64px;
+    background:$layout-header-bgc;
+  }
 }
 
 .main-container {

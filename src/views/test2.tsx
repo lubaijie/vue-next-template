@@ -1,6 +1,8 @@
 import { defineComponent, ref, Transition } from 'vue';
 import '@/style/test.scss';
 
+import { BasicModal } from '@/components/Modal';
+
 const isFade = ref(true);
 
 
@@ -22,6 +24,7 @@ const test2 = defineComponent({
 
     return () => (
       <div>
+        <BasicModal />
         <a-button>测试2</a-button>
         <Transition name="fade">
           {isFade.value ? <div v-fade>显示</div> : null}
