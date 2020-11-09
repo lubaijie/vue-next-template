@@ -1,4 +1,4 @@
-import { defineComponent, ref, watch, inject } from 'vue';
+import { defineComponent, inject } from 'vue';
 import router from '@/router/index';
 import '../style/menu.scss';
 import { AppRouteRecordRaw } from '@/router/types';
@@ -8,16 +8,16 @@ export default defineComponent({
   name: 'Menu',
   setup() {
     const collapsed: any = inject('collapsed');
-    const selectedKeys = ref(['1']);
-    const openKeys = ref(['sub1']);
-    let preOpenKeys = ['sub1'];
-    watch(openKeys, (val, oldVal) => {
-      preOpenKeys = oldVal;
-    });
-    watch(collapsed, val => {
-      openKeys.value = val ? [] : preOpenKeys;
-    });
-    // console.log(router.currentRoute.value);
+    // const selectedKeys = ref(['/test']);
+    // const openKeys = ref([router.currentRoute.value.fullPath]);
+    // let preOpenKeys = [router.currentRoute.value.fullPath];
+
+    // watch(openKeys, (val, oldVal) => {
+    //   preOpenKeys = oldVal;
+    // });
+    // watch(collapsed, val => {
+    //   openKeys.value = val ? [] : preOpenKeys;
+    // });
     const { options } = router;
     const routerDatas = options.routes;
     const createMenu = (routers: AppRouteRecordRaw[]) => {
@@ -32,13 +32,13 @@ export default defineComponent({
           const subMenu = collapsed.value ? <div>{iconElement}</div> : <div>{iconElement}{titleElement}</div>
           if (item.children) {
             return (
-              <a-sub-menu key={item.key} title={subMenu}>
+              <a-sub-menu key={item.fullPath} title={subMenu}>
                 {createMenu(item.children)}
               </a-sub-menu>
             )
           } else {
             return (
-              <a-menu-item key={item.key}>
+              <a-menu-item key={item.fullPath}>
                 <router-link to={item.path}>{subMenu}</router-link>
               </a-menu-item>
             )
@@ -51,8 +51,6 @@ export default defineComponent({
       <div class="menu-container">
         <a-menu 
           style="text-align: left"
-          vModel_openKeys={openKeys.value}
-          vModel_selectedKeys={selectedKeys.value}
           mode="inline"
           theme="dark"
           inlineCollapsed={collapsed.value}>

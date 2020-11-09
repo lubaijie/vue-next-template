@@ -1,104 +1,92 @@
 <template>
-  <div ref="root">
-    <a-button @click="isFade = !isFade">测试</a-button>
-    <div class="test">
-      <div style="height: 400px">123433234</div>
-    </div>
-    <transition name="fade">
-      <div v-if="isFade">测试测试</div>
-    </transition> 
-  </div>
+<div>
+  <a-menu id="dddddd" style="width: 256px" v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys" mode="inline" @click="handleClick">
+    <a-sub-menu key="sub1" @titleClick="titleClick">
+      <template #title>
+        <span>
+          <MailOutlined /><span>Navigation One</span>
+        </span>
+      </template>
+      <a-menu-item-group key="g1">
+        <template #title>
+          <QqOutlined /><span>Item 1</span>
+        </template>
+        <a-menu-item key="1">Option 1</a-menu-item>
+        <a-menu-item key="2">Option 2</a-menu-item>
+      </a-menu-item-group>
+      <a-menu-item-group key="g2" title="Item 2">
+        <a-menu-item key="3">
+          Option 3
+        </a-menu-item>
+        <a-menu-item key="4">
+          Option 4
+        </a-menu-item>
+      </a-menu-item-group>
+    </a-sub-menu>
+    <a-sub-menu key="sub2" @titleClick="titleClick">
+      <template #title>
+        <span>
+          <AppstoreOutlined /><span>Navigation Two</span>
+        </span>
+      </template>
+      <a-menu-item key="5">Option 5</a-menu-item>
+      <a-menu-item key="6">Option 6</a-menu-item>
+      <a-sub-menu key="sub3" title="Submenu">
+        <a-menu-item key="7">
+          Option 7
+        </a-menu-item>
+        <a-menu-item key="8">
+          Option 8
+        </a-menu-item>
+      </a-sub-menu>
+    </a-sub-menu>
+    <a-sub-menu key="sub4">
+      <template #title>
+        <span>
+          <SettingOutlined /><span>Navigation Three</span>
+        </span>
+      </template>
+      <a-menu-item key="9">Option 9</a-menu-item>
+      <a-menu-item key="10">Option 10</a-menu-item>
+      <a-menu-item key="11">Option 11</a-menu-item>
+      <a-menu-item key="12">Option 12</a-menu-item>
+    </a-sub-menu>
+  </a-menu>
+</div>
 </template>
 
 <script>
 import {
-  ref,
-  onMounted,
-  defineComponent
-} from 'vue'
-// import { Loading } from 'element-ui';
-// import { message } from 'ant-design-vue'
-// import { useStore } from 'vuex'
-import {
-  test
-} from '@/api/test'
-// import { notification } from 'ant-design-vue'
-import loading from '@/components/Loading/service.tsx'
-
-export default defineComponent({
-  setup() {
-    const isFade = ref(true);
-    const root = ref(null);
-
-    // const store = useStore();
-
-    onMounted(() => {
-      // const div = document.createElement('div');
-      // console.log(typeof(div));
-      // Loading.service({ background: 'rgba(0, 0, 0, 0.4)', spinner: 'el-icon-loading', text: '拼命加载中...' });
-      // console.log(store.state.system.isLoading);
-      // store.dispatch('system/IsLoading', false);
-      // console.log(store.state.system.isLoading);
-    })
-
-    const t = () => {
-      test().then(res => {
-        console.log(res)
-      })
-    }
-
-    const ceshi = () => {
-      loading.open({
-        text: '拼命加载中...'
-      });
-    }
-
+  MailOutlined,
+  QqOutlined,
+  AppstoreOutlined,
+  SettingOutlined
+} from '@ant-design/icons-vue';
+export default {
+  components: {
+    MailOutlined,
+    QqOutlined,
+    AppstoreOutlined,
+    SettingOutlined,
+  },
+  data() {
     return {
-      root,
-      t,
-      ceshi,
-      isFade
-    }
-  }
-})
+      selectedKeys: ['1'],
+      openKeys: ['sub1'],
+    };
+  },
+  watch: {
+    openKeys(val) {
+      console.log('openKeys', val);
+    },
+  },
+  methods: {
+    handleClick(e) {
+      console.log('click', e);
+    },
+    titleClick(e) {
+      console.log('titleClick', e);
+    },
+  },
+};
 </script>
-
-<style lang="scss">
-.test{
-  height: 200px;
-  overflow: auto;
-  overflow-y: scroll;
-  scrollbar-color: transparent transparent;
-  scrollbar-track-color: transparent;
-  -ms-scrollbar-track-color: transparent;
-  &::-webkit-scrollbar { width: 0 !important }
-  // &::-webkit-scrollbar {
-  //   width: 8px;
-  //   height: 8px;
-  // }
-
-  // &::-webkit-scrollbar-thumb {
-  //   border-radius: 8px;
-  //   background-color: hsla(220, 4%, 58%, 0.3);
-  //   transition: background-color 0.3s;
-
-  //   &:hover {
-  //     background: #bbb;
-  //   }
-  // }
-
-  // &::-webkit-scrollbar-track {
-  //   background: #ededed;
-  // }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
