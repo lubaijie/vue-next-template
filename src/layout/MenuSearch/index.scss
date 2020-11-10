@@ -1,0 +1,30 @@
+@import '../../style/var/index.scss';
+
+.search-conatiner{
+  padding: 0 10px;
+  height: 48px;
+  line-height: 48px;
+  .search-icon{
+    font-size: 22px;
+    cursor: pointer;
+    color: #737373;
+    position: relative;
+    right: 12px;
+    top: 4px;
+    &:hover{
+      color: $text-color-base;
+    }
+  }
+  .search-input{
+    transition: all .2s;
+    -webkit-transform: all .2s;
+    .icon{
+      font-size: 22px;
+      cursor: pointer;
+      color: #737373;
+      &:hover{
+        color: $text-color-base;
+      }
+    }
+  }
+}

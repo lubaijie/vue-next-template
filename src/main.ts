@@ -10,6 +10,8 @@ import 'ant-design-vue/dist/antd.css';
 import './assets/icons/index.js';
 import SvgIcon from '@/components/SvgIcon/index.vue';
 
+import '@/style/index.scss';
+
 const app = createApp(App);
 
 app.component('svg-icon', SvgIcon);

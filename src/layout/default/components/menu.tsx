@@ -9,8 +9,8 @@ export default defineComponent({
   setup() {
     const collapsed: any = inject('collapsed');
     // const selectedKeys = ref(['/test']);
-    // const openKeys = ref([router.currentRoute.value.fullPath]);
-    // let preOpenKeys = [router.currentRoute.value.fullPath];
+    // const openKeys = ref(['/system']);
+    // let preOpenKeys = ['/system'];
 
     // watch(openKeys, (val, oldVal) => {
     //   preOpenKeys = oldVal;
