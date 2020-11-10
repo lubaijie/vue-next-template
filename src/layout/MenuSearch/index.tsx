@@ -26,14 +26,15 @@ const MenuSeach = defineComponent({
       })
     }
     orderOption(routerDatas);
-
+    
+    // 根据输入更新options数据
+    const perOption = optionsRef.value;
     watchEffect(() => {
       if (keyWordRef.value.trim() === ''){
-        optionsRef.value = [];
-        orderOption(routerDatas);
+        optionsRef.value = perOption;
       } else {
-        optionsRef.value = optionsRef.value.filter(item => {
-          return (item.value as string).indexOf(keyWordRef.value) < 0;
+        optionsRef.value = perOption.filter(item => {
+          return (item.value as string).indexOf(keyWordRef.value) >= 0;
         });
       }
     })
@@ -41,13 +42,13 @@ const MenuSeach = defineComponent({
     // 打开关闭搜索框动画
     const switchInput = ref<boolean>(false);
     const inputStyle = ref<CSSProperties>({width: '50px'})
-    function displayNone() {
+    function displayBlock() {
       switchInput.value = true;  
       setTimeout(() => {
         inputStyle.value = { width: '200px' };
       },10)
     }
-    function displayBlock() {
+    function displayNone() {
       inputStyle.value = { width: '50px' };
       setTimeout(() => {
         switchInput.value = false;
@@ -67,17 +68,23 @@ const MenuSeach = defineComponent({
           <a-auto-complete
             class="search-input"
             style={inputStyle.value}
-            placeholder="搜索"
+            placeholder="菜单搜索"
             autofocus={switchInput.value}
-            value={keyWordRef.value}
+            v-model={[keyWordRef.value, 'value']}
             options={optionsRef.value}
-            onChange={e => keyWordRef.value = e}
-            onBlur={displayBlock}
+            onBlur={displayNone}
             onSelect={direct}
+            v-slots={{
+              default: () => <a-input 
+                class="search-text"
+                allowClear
+                v-slots={{
+                  prefix: () => <SearchOutlined class="icon" />
+                }} />
+            }}
           />
-          : <SearchOutlined class="search-icon" onClick={displayNone} />
-        }
-        
+          : <SearchOutlined class="search-icon" onClick={displayBlock} />
+        }      
       </div>
     )
   }
