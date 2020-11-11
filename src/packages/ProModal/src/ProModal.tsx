@@ -1,42 +1,34 @@
-import { extendSlots, getSlot } from '@/utils/helper/tsxHelper';
+import { getSlot } from '@/utils/helper/tsxHelper';
+import { splitObject } from '@/utils/helper/vueHelper';
 import { CloseOutlined, FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons-vue';
-import { defineComponent, ref, unref, watchEffect } from "vue";
+import { defineComponent, ref, unref } from "vue";
 // import { defaultProps } from './props';
-import { ModalProps } from './types';
+import { ModalProps, AugmentProps } from './types';
+
+const augmentPros: AugmentProps = {
+  canFullScreen: true,
+  fullScreen: false,
+}
 
 const ProModal = defineComponent({
   name: 'ProModal',
-  // props: defaultProps,
   setup(props: ModalProps, { slots, emit, attrs }) {
 
-    // const ll = keyof(ModalProps);
-    // console.log(ll.value);
-
-    const canFullScreenRef = ref<boolean | undefined>(true);
-    watchEffect(() => {
-      if (props.canFullScreen) {
-        canFullScreenRef.value = props.canFullScreen;
-      }
-      
-    })
-
-    const fullScreenRef = ref<boolean | undefined>(false);
-    watchEffect(() => {
-      if(props.fullScreen) fullScreenRef.value = props.fullScreen;
-    })
+    const augmentPropsRef = ref<AugmentProps>(splitObject(augmentPros, props));
 
     /**
      * @description 关闭按钮
      */
     function renderClose() {
-      if (!canFullScreenRef.value) {
+      const { canFullScreen, fullScreen } = unref(augmentPropsRef)
+      if (!canFullScreen) {
         return null;
       }
 
       return (
         <div class="custom-close-iocn">
           {
-            unref(fullScreenRef) ? <FullscreenExitOutlined role="full" /> : <FullscreenOutlined role="close" />
+            unref(fullScreen) ? <FullscreenExitOutlined role="full" /> : <FullscreenOutlined role="close" />
           }
           {
             (props.closeIcon || getSlot(slots, 'closeIcon')) ? 
