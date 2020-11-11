@@ -1,9 +1,19 @@
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
+import { ProModal } from '@/packages/ProModal';
 
 export default defineComponent({
   setup() {
+
+    const visibleRef = ref<boolean>(false);
+
     return () => (
-      <div>测试2</div>
+      <>
+        <a-button onClick={() =>visibleRef.value = true }>打开</a-button>
+    <ProModal 
+      visible={visibleRef.value} title="测试" 
+      onCancel={() => visibleRef.value = false}
+      v-slots={{closeIcon: () => <div>从</div>}}>ccccc</ProModal>
+      </>
     )
   }
 })

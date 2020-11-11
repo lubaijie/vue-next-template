@@ -27,6 +27,7 @@
     "vue-loader": "^15.9.5",
     "vue-loading-spinner": "^1.0.11",
     "vue-router": "^4.0.0-rc.2",
+    "vue-types": "^3.0.1",
     "vuex": "^4.0.0-rc.1"
   },
   "devDependencies": {
