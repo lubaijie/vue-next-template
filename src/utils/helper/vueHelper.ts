@@ -7,7 +7,6 @@ import {
   onUnmounted,
   nextTick,
   reactive,
-  ref,
 } from 'vue';
 
 export function explicitComputed<T, S>(source: WatchSource<S>, fn: () => T) {
@@ -46,13 +45,16 @@ export function isInSetup() {
   }
 }
 
-export function splitObject(target, source) {
+export function splitProps(target, source) {
+  const remain: any = {};
   const targetKeys = Object.keys(target);
-  targetKeys.forEach(key => {
-    if (source[key]) {
+  Object.keys(source).forEach(key => {
+    if (targetKeys.indexOf(key) > -1) {
       target[key] = source[key];
+    } else {
+      remain[key] = source[key];
     }
   });
 
-  return target;
+  return {target, remain};
 }

@@ -16,7 +16,10 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     "vue/no-useless-v-bind": "warn",
     "@typescript-eslint/no-explicit-any": "off",
-    "vue/no-v-model-argument": "off"
+    "vue/no-v-model-argument": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "vue/custom-event-name-casing": "off",
+    "@typescript-eslint/no-empty-function": "off"
   },
   overrides: [
     {

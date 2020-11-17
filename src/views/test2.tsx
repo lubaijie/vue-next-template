@@ -11,8 +11,7 @@ export default defineComponent({
         <a-button onClick={() =>visibleRef.value = true }>打开</a-button>
     <ProModal 
       visible={visibleRef.value} title="测试" 
-      onCancel={() => visibleRef.value = false}
-      v-slots={{closeIcon: () => <div>从</div>}}>ccccc</ProModal>
+      onCancel={() => visibleRef.value = false}>ccccc</ProModal>
       </>
     )
   }
