@@ -11,9 +11,8 @@ const ProModal = defineComponent({
   props: defaultProps,
   setup(props, { slots, attrs }) {
 
-    const modalRef = ref<any>(null);
-    console.log(unref(modalRef))
-    provide('modalRef', modalRef);
+    const modalWrapperRef = ref<any>(null);
+    provide('modalWrapperRef', modalWrapperRef);
 
     const augmentPropsRef = ref<AugmentProps>(splitProps(modalProps, props).target);
     const propsRef = ref<ModalProps>(splitProps(modalProps, props).remain);
@@ -34,9 +33,8 @@ const ProModal = defineComponent({
      * @description modalContent
      */
     function renderContent() {
-
       return (
-        <ModalWrapper v-slots={{default: () => getSlot(slots, 'default')}} />
+        <ModalWrapper ref={modalWrapperRef} fullScreen={unref(augmentPropsRef).fullScreen} v-slots={{default: () => getSlot(slots, 'default')}} />
       )
     }
     
@@ -80,7 +78,6 @@ const ProModal = defineComponent({
     return () => (
       <>
         <a-modal 
-          ref={modalRef}
           {...{...propsRef.value, ...augmentPropsRef.value, ...attrs, closeIcon: () => renderClose()}} 
           v-slots={{...slots, closeIcon: () => renderClose(), default: () => renderContent()}} />
       </> 

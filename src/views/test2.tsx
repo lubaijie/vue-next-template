@@ -12,7 +12,7 @@ export default defineComponent({
         <ProModal 
           visible={visibleRef.value} title="测试" 
           onCancel={() => visibleRef.value = false}
-          footer={null}>22222222222</ProModal>
+        >22222222222</ProModal>
       </>
     )
   }

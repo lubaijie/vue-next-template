@@ -4,7 +4,7 @@ export interface AugmentProps {
   // 是否可以进行全屏
   canFullScreen: boolean;
   // 全屏
-  fullScreen?: boolean;
+  fullScreen: boolean;
 
   draggable: boolean;
 
