@@ -9,9 +9,10 @@ export default defineComponent({
     return () => (
       <>
         <a-button onClick={() =>visibleRef.value = true }>打开</a-button>
-    <ProModal 
-      visible={visibleRef.value} title="测试" 
-      onCancel={() => visibleRef.value = false}>ccccc</ProModal>
+        <ProModal 
+          visible={visibleRef.value} title="测试" 
+          onCancel={() => visibleRef.value = false}
+          footer={null}>22222222222</ProModal>
       </>
     )
   }

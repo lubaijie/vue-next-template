@@ -1,6 +1,5 @@
 import type { PropType } from 'vue';
 import { Modal } from 'ant-design-vue';
-import { ModalWrapperProps } from './types';
 export const modalProps = {
   canFullScreen: {
     type: Boolean as PropType<boolean>,
