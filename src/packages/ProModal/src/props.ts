@@ -1,4 +1,4 @@
-import type { PropType } from 'vue';
+import type { CSSProperties, PropType } from 'vue';
 import { Modal } from 'ant-design-vue';
 import { BasicTitleProps } from '@/packages/Basic/types';
 export const modalProps = {
@@ -23,6 +23,11 @@ export const modalProps = {
   },
 
   titleProps: Object as PropType<BasicTitleProps>,
+
+  titleStyle: {
+    type: Object as PropType<CSSProperties>,
+    default: { padding: '12px 24px', cursor: 'move' }
+  }
 };
 
 export const defaultProps = Object.assign({}, modalProps, Modal.props)

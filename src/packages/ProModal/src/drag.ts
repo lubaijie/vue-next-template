@@ -6,47 +6,54 @@ let onDrag = false;
 
 let timer: number | null = null;
 
-const dia = 60;
+const dia = 0;
+
+let tt = 0;
 
 
-const drag = {
-  mounted(el) {
-    el.onmousedown = e => {
-      if (timer === null) {
-        timer = setTimeout(() => {
-          timer = null;
-        }, 200);
-        x = e.clientX;
-        y = e.clientY;
-        px = el.offsetLeft;
-        py = el.offsetTop;
-        onDrag = true;
-        el.style.cursor = 'move';
+function drag(el: HTMLElement) {
+  // const tt = (el.target as HTMLElement).clientWidth;
+  const elWidth = el.clientLeft;
+  el.onmousedown = e => {
+    // console.log(e.offsetX)
+    if (timer === null) {
+      timer = setTimeout(() => {
+        timer = null;
+      }, 200);
+      x = e.clientX;
+      y = e.clientY;
+      px = el.offsetLeft;
+      py = el.offsetTop;
+      onDrag = true;
+      el.style.cursor = 'move';
+
+      tt = e.offsetX;
+    }
+  },
+  window.onmousemove = e => {
+    if (onDrag) {
+      const nx = e.clientX + px - x;
+      const ny = e.clientY + py - y;
+      const width = document.body.clientWidth - dia;
+      const height = document.body.clientHeight - dia;
+      console.log(e.clientX+150, tt+x, elWidth)
+      if (nx <= width) {
+        el.style.left = nx + 'px'
+        // console.log(nx, el.offsetLeft, width)
       }
-      },
-      window.onmousemove = e => {
-        if (onDrag) {
-          const nx = e.clientX + px - x;
-          const ny = e.clientY + py - y;
-          const width = document.body.clientWidth - dia;
-          const height = document.body.clientHeight - dia;
-          console.log(el.style.left)
-          if (nx > 0 && nx <= width) {
-            el.style.left = nx + 'px'
-          }
-          if (ny > 0 && ny <= height) {
-            el.style.top = ny + 'px'
-          }
-
-        }
-      },
-      el.onmouseup = () => {
-        if (onDrag) {
-          onDrag = false;
-          el.style.cursor = 'default';
-        }
+      if (ny > 0 && ny <= height) {
+        el.style.top = ny + 'px'
       }
+
+    }
+  },
+  el.onmouseup = () => {
+    if (onDrag) {
+      onDrag = false;
+      el.style.cursor = 'default';
+    }
   }
+  
 }
 
 export default drag;

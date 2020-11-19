@@ -3,17 +3,14 @@ import { getSlot } from '@/utils/helper/tsxHelper';
 import { splitProps } from '@/utils/helper/vueHelper';
 import { CloseOutlined, FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons-vue';
 import { defineComponent, provide, ref, unref, watch } from "vue";
+import drag from './drag';
 import ModalWrapper from './ModalWrapper';
 import { defaultProps, modalProps } from './props';
 import {AugmentProps, ModalProps } from './types';
-import drag from './drag';
 
 const ProModal = defineComponent({
   name: 'ProModal',
   props: defaultProps,
-  directives: {
-    drag: drag
-  },
   setup(props: ModalProps, { slots, attrs }) {
 
     const modalWrapperRef = ref<any>(null);
@@ -40,12 +37,29 @@ const ProModal = defineComponent({
     function renderTitle() {
       const { titleProps } = unref(augmentPropsRef);
       return (
-        <div style="padding: 12px 24px">
+        <div 
+          style={unref(augmentPropsRef).titleStyle}
+          onMousedown={dragTest}
+        >
           <BasicTitle {...titleProps}>
             {slots.title ? getSlot(slots, 'title') : unref(propsRef).title}
           </BasicTitle>
         </div>
       )
+    }
+
+    function dragTest(e: MouseEvent) {
+      let el = e.target as HTMLElement;
+      if (el !== e.currentTarget) {
+        el = ((e.target as HTMLElement).parentElement) as HTMLElement;
+      }
+
+      const modalContentEl = el.parentElement?.parentElement?.parentElement;
+      if (!modalContentEl) return;
+
+      // console.log(modalContentEl);
+
+      drag(modalContentEl);
     }
 
     /**

@@ -1,5 +1,6 @@
 import { BasicTitleProps } from '@/packages/Basic/types';
 import { ModalProps } from 'ant-design-vue/lib/modal'
+import type { CSSProperties } from 'vue';
 
 export interface AugmentProps {
   // 是否可以进行全屏
@@ -13,6 +14,8 @@ export interface AugmentProps {
   wrapperFooterOffset?: number;
 
   titleProps?: BasicTitleProps;
+
+  titleStyle?: CSSProperties
 }
 
 export type ModalProps = AugmentProps & ModalProps;
