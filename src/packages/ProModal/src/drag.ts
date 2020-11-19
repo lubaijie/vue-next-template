@@ -15,11 +15,11 @@ function drag(el: HTMLElement) {
   // const tt = (el.target as HTMLElement).clientWidth;
   const elWidth = el.clientLeft;
   el.onmousedown = e => {
-    // console.log(e.offsetX)
+    console.log(e.offsetX)
     if (timer === null) {
       timer = setTimeout(() => {
         timer = null;
-      }, 200);
+      }, 20);
       x = e.clientX;
       y = e.clientY;
       px = el.offsetLeft;
@@ -36,8 +36,8 @@ function drag(el: HTMLElement) {
       const ny = e.clientY + py - y;
       const width = document.body.clientWidth - dia;
       const height = document.body.clientHeight - dia;
-      console.log(e.clientX+150, tt+x, elWidth)
-      if (nx <= width) {
+      console.log(e.clientX - tt)
+      if (e.clientX - tt > 20 && e.clientX + (300-tt-20) <= width) {
         el.style.left = nx + 'px'
         // console.log(nx, el.offsetLeft, width)
       }
