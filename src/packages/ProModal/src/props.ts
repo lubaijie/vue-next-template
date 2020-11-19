@@ -1,5 +1,6 @@
 import type { PropType } from 'vue';
 import { Modal } from 'ant-design-vue';
+import { BasicTitleProps } from '@/packages/Basic/types';
 export const modalProps = {
   canFullScreen: {
     type: Boolean as PropType<boolean>,
@@ -21,7 +22,7 @@ export const modalProps = {
     default: 0,
   },
 
-  wrapperProps: Object as PropType<any>,
+  titleProps: Object as PropType<BasicTitleProps>,
 };
 
 export const defaultProps = Object.assign({}, modalProps, Modal.props)

@@ -37,6 +37,9 @@
   transition: all .5s;
 
   .ant-modal-content {
+    .ant-modal-header{
+      padding: 0 !important;
+    }
     .ant-modal-footer{
       padding: 10px 16px;
     }

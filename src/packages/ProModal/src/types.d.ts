@@ -1,3 +1,4 @@
+import { BasicTitleProps } from '@/packages/Basic/types';
 import { ModalProps } from 'ant-design-vue/lib/modal'
 
 export interface AugmentProps {
@@ -11,17 +12,7 @@ export interface AugmentProps {
   // 启用wrapper后 底部可以适当增加高度
   wrapperFooterOffset?: number;
 
-  wrapperProps: any;
+  titleProps?: BasicTitleProps;
 }
 
 export type ModalProps = AugmentProps & ModalProps;
-
-export interface ModalWrapperProps {
-  footerOffset?: number;
-  loading: boolean;
-  modalHeaderHeight: number;
-  modalFooterHeight: number;
-  minHeight: number;
-  visible: boolean;
-  fullScreen: boolean;
-}

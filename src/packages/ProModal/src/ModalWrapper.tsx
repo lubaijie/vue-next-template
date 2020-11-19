@@ -1,6 +1,12 @@
 import { getSlot } from '@/utils/helper/tsxHelper';
 import { defineComponent, inject, onMounted, unref, watchEffect } from 'vue';
 
+let modalContentEl;
+let modalWrapperEl;
+let modalBodyEl;
+let modalHeaderEl;
+let modalFooterEl;
+
 export default defineComponent({
   name: 'ModalContent',
   props: {
@@ -11,6 +17,7 @@ export default defineComponent({
   },
   setup(props, {slots}) {
     const modalWrapperRef = inject<any>('modalWrapperRef');
+    
     watchEffect(() => {
       watchHeight();
     })
@@ -19,17 +26,17 @@ export default defineComponent({
     })
 
     function watchHeight() {
-      const modalWrapperEl = unref(modalWrapperRef)?.$el as HTMLElement;
+      modalWrapperEl = unref(modalWrapperRef)?.$el as HTMLElement;
       if (!modalWrapperEl) return;
 
-      const modalBodyEl = modalWrapperEl.parentElement;
+      modalBodyEl = modalWrapperEl.parentElement;
       
-      const modalContentEl = modalWrapperEl.parentElement?.parentElement;
+      modalContentEl = modalWrapperEl.parentElement?.parentElement;
       if (!modalContentEl) return;
       
-      const modalHeaderEl = modalContentEl.getElementsByClassName('ant-modal-header')[0];
+      modalHeaderEl = modalContentEl.getElementsByClassName('ant-modal-header')[0];
 
-      const modalFooterEl = modalContentEl.getElementsByClassName('ant-modal-footer')[0];
+      modalFooterEl = modalContentEl.getElementsByClassName('ant-modal-footer')[0];
 
       const bodyHeight = props.fullScreen ? (window.innerHeight - (modalHeaderEl ? modalHeaderEl.clientHeight : 0)
         - (modalFooterEl ? modalFooterEl.clientHeight : 0)) 
