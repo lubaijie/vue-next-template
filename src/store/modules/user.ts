@@ -31,7 +31,7 @@ const actions = {
           commit('ROLES', res.data.user.roles);
           commit('USER', res.data.user.user);
           setToken(res.data.token, true);
-          resolve();
+          resolve(null);
         } else {
           reject(res.msg);
         }

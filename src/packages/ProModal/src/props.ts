@@ -26,7 +26,7 @@ export const modalProps = {
 
   titleStyle: {
     type: Object as PropType<CSSProperties>,
-    default: { padding: '12px 24px', cursor: 'move' }
+    default: { padding: '12px 24px' }
   }
 };
 

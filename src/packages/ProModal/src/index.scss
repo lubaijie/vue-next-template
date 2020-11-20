@@ -184,3 +184,11 @@
 .modal-wrapper{
   padding: 10px;
 }
+
+.modal-drag{
+  position: absolute;
+  height: 48px;
+  width: 100%;
+  cursor: move;
+  z-index: 9;
+}

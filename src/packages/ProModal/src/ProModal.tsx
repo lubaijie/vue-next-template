@@ -7,6 +7,7 @@ import drag from './drag';
 import ModalWrapper from './ModalWrapper';
 import { defaultProps, modalProps } from './props';
 import {AugmentProps, ModalProps } from './types';
+import './index.scss';
 
 const ProModal = defineComponent({
   name: 'ProModal',
@@ -37,29 +38,86 @@ const ProModal = defineComponent({
     function renderTitle() {
       const { titleProps } = unref(augmentPropsRef);
       return (
-        <div 
-          style={unref(augmentPropsRef).titleStyle}
-          onMousedown={dragTest}
-        >
-          <BasicTitle {...titleProps}>
-            {slots.title ? getSlot(slots, 'title') : unref(propsRef).title}
-          </BasicTitle>
-        </div>
+        <>
+          { unref(augmentPropsRef).draggable ? <div class="modal-drag" onMousedown={handleDrag}></div> : null }
+          <div 
+            style={unref(augmentPropsRef).titleStyle}
+          >
+            <BasicTitle {...titleProps}>
+              {slots.title ? getSlot(slots, 'title') : unref(propsRef).title}
+            </BasicTitle>
+          </div>
+        </>
       )
     }
 
-    function dragTest(e: MouseEvent) {
-      let el = e.target as HTMLElement;
-      if (el !== e.currentTarget) {
-        el = ((e.target as HTMLElement).parentElement) as HTMLElement;
+
+    function handleDrag(event: MouseEvent) {
+      const el = event.target as HTMLElement;
+      if (!el) return;
+
+      const modalEl = el.parentElement?.parentElement?.parentElement?.parentElement;
+      if (!modalEl) return;
+
+      modalEl.style.transition = 'none';
+
+      // 鼠标按下，计算当前元素距离可视区的距离
+      const disX = event.clientX;
+      const disY = event.clientY;
+      const screenWidth = document.body.clientWidth; // body当前宽度
+      const screenHeight = document.documentElement.clientHeight; // 可见区域高度(应为body高度，可某些环境下无法获取)
+
+      const dragDomWidth = modalEl.offsetWidth; // 对话框宽度
+      const dragDomheight = modalEl.offsetHeight; // 对话框高度
+
+      const minDragDomLeft = modalEl.offsetLeft;
+
+      const maxDragDomLeft = screenWidth - modalEl.offsetLeft - dragDomWidth;
+      const minDragDomTop = modalEl.offsetTop;
+      const maxDragDomTop = screenHeight - modalEl.offsetTop - dragDomheight;
+      // 获取到的值带px 正则匹配替换
+      const domLeft = getComputedStyle(modalEl).left;
+      const domTop = getComputedStyle(modalEl).top;
+      let styL = +domLeft;
+      let styT = +domTop;
+
+      // 注意在ie中 第一次获取到的值为组件自带50% 移动之后赋值为px
+      if (domLeft.includes('%')) {
+        styL = +document.body.clientWidth * (+domLeft.replace(/%/g, '') / 100);
+        styT = +document.body.clientHeight * (+domTop.replace(/%/g, '') / 100);
+      } else {
+        styL = +domLeft.replace(/px/g, '');
+        styT = +domTop.replace(/px/g, '');
       }
 
-      const modalContentEl = el.parentElement?.parentElement?.parentElement;
-      if (!modalContentEl) return;
+      document.onmousemove = e => {
 
-      // console.log(modalContentEl);
+        // 通过事件委托，计算移动的距离
+        let left = e.clientX - disX;
+        let top = e.clientY - disY;
 
-      drag(modalContentEl);
+        // 边界处理
+        if (-left > minDragDomLeft) {
+          left = -minDragDomLeft;
+        } else if (left > maxDragDomLeft) {
+          left = maxDragDomLeft;
+        }
+
+        if (-top > minDragDomTop) {
+          top = -minDragDomTop;
+        } else if (top > maxDragDomTop) {
+          top = maxDragDomTop;
+        }
+        console.log(left + styL);
+        // 移动当前元素
+        modalEl.style.cssText += `;left:${left + styL}px;top:${top + styT}px;`;
+      }
+
+      document.onmouseup = () => {
+        document.onmousemove = null;
+        document.onmouseup = null;
+        modalEl.style.transition = 'all .5s';
+      };
     }
 
     /**

@@ -12,6 +12,7 @@
     "@antv/g6": "^3.8.5",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.2.1",
     "@vue/babel-preset-jsx": "^1.2.4",
+    "@vueuse/core": "^4.0.0-rc.3",
     "ant-design-vue": "^2.0.0-rc.1",
     "axios": "^0.20.0",
     "core-js": "^3.7.0",
@@ -53,7 +54,7 @@
     "ts-interface-keys-transformer": "^2.3.2",
     "ts-morph": "^8.2.0",
     "ttypescript": "^1.5.12",
-    "typescript": "^4.0.5",
+    "typescript": "^4.1.2",
     "vue-svg-loader": "^0.17.0-beta.2",
     "vue-template-compiler": "^2.6.12"
   },
