@@ -192,3 +192,20 @@
   cursor: move;
   z-index: 9;
 }
+
+.modal-resize-icon{
+  height: 10px;
+  width: 10px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: nw-resize;
+  // color: red;
+
+  &:hover{
+    width: 0;
+    height: 0;
+    border-bottom: 10px solid $primary-color;
+    border-left: 10px solid transparent;
+  }
+}

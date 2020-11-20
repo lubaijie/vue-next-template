@@ -3,7 +3,6 @@ import { getSlot } from '@/utils/helper/tsxHelper';
 import { splitProps } from '@/utils/helper/vueHelper';
 import { CloseOutlined, FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons-vue';
 import { defineComponent, provide, ref, unref, watch } from "vue";
-import drag from './drag';
 import ModalWrapper from './ModalWrapper';
 import { defaultProps, modalProps } from './props';
 import {AugmentProps, ModalProps } from './types';
@@ -51,7 +50,46 @@ const ProModal = defineComponent({
       )
     }
 
+    /**
+     * @description modalContent
+     */
+    function renderContent() {
+      return (
+        <ModalWrapper 
+          ref={modalWrapperRef} 
+          fullScreen={unref(augmentPropsRef).fullScreen} 
+          v-slots={{default: () => getSlot(slots, 'default')}} 
+        />
+      )
+    }
 
+    /**
+     * @description 关闭按钮
+     */
+    function renderClose() {
+      if (!unref(augmentPropsRef).canFullScreen) {
+        return null;
+      }
+
+      return (
+        <div class="custom-close-iocn">
+          {
+            unref(augmentPropsRef).fullScreen ? <FullscreenExitOutlined role="full" onClick={handleFullScreen} /> 
+            : <FullscreenOutlined role="close" onClick={handleFullScreen} />
+          }
+          {
+            (props.closeIcon || getSlot(slots, 'closeIcon')) ? 
+              (getSlot(slots, 'closeIcon') ? getSlot(slots, 'closeIcon') : props.closeIcon)
+              : <CloseOutlined />
+          }
+        </div>
+      )
+    }
+
+    /**
+     * @description 拖拽
+     * @param event 
+     */
     function handleDrag(event: MouseEvent) {
       const el = event.target as HTMLElement;
       if (!el) return;
@@ -108,7 +146,6 @@ const ProModal = defineComponent({
         } else if (top > maxDragDomTop) {
           top = maxDragDomTop;
         }
-        console.log(left + styL);
         // 移动当前元素
         modalEl.style.cssText += `;left:${left + styL}px;top:${top + styT}px;`;
       }
@@ -121,15 +158,6 @@ const ProModal = defineComponent({
     }
 
     /**
-     * @description modalContent
-     */
-    function renderContent() {
-      return (
-        <ModalWrapper ref={modalWrapperRef} fullScreen={unref(augmentPropsRef).fullScreen} v-slots={{default: () => getSlot(slots, 'default')}} />
-      )
-    }
-    
-    /**
      * @description 全屏切换
      * @param e 
      */
@@ -141,29 +169,6 @@ const ProModal = defineComponent({
       
       unref(propsRef).wrapClassName = className;
       
-    }
-
-    /**
-     * @description 关闭按钮
-     */
-    function renderClose() {
-      if (!unref(augmentPropsRef).canFullScreen) {
-        return null;
-      }
-
-      return (
-        <div class="custom-close-iocn">
-          {
-            unref(augmentPropsRef).fullScreen ? <FullscreenExitOutlined role="full" onClick={handleFullScreen} /> 
-            : <FullscreenOutlined role="close" onClick={handleFullScreen} />
-          }
-          {
-            (props.closeIcon || getSlot(slots, 'closeIcon')) ? 
-              (getSlot(slots, 'closeIcon') ? getSlot(slots, 'closeIcon') : props.closeIcon)
-              : <CloseOutlined />
-          }
-        </div>
-      )
     }
 
     return () => (
